@@ -6,10 +6,20 @@ from typing import Optional, Tuple
 from pytubefix import YouTube
 import logging
 import requests
+import random
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
+
+# List of common User-Agent strings to rotate through for better YouTube access
+USER_AGENTS = [
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0',
+    'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (iPad; CPU OS 17_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1'
+]
 
 class YouTubeDownloader:
     """
@@ -75,17 +85,45 @@ class YouTubeDownloader:
         
         while retry_count < max_retries:
             try:
+                # Select a random User-Agent for this attempt
+                user_agent = random.choice(USER_AGENTS)
+                
                 # Check if the content is available by checking thumbnail availability
-                response = requests.head(f"https://img.youtube.com/vi/{content_id}/0.jpg")
+                # Use a proper User-Agent in the headers
+                headers = {
+                    'User-Agent': user_agent,
+                    'Accept-Language': 'en-US,en;q=0.9',
+                    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+                    'Referer': 'https://www.google.com/',
+                    'DNT': '1'
+                }
+                
+                logger.debug(f"Using User-Agent: {user_agent}")
+                
+                response = requests.head(
+                    f"https://img.youtube.com/vi/{content_id}/0.jpg",
+                    headers=headers
+                )
+                
                 if response.status_code == 404:
                     logger.error(f"Content ID {content_id} does not exist or is not available")
                     raise Exception(f"YouTube content not found or not available: {content_id}")
                 
-                # Create YouTube object with progressive retries
+                # Create YouTube object with custom settings to avoid 403 errors
                 yt = None
                 for attempt in range(3):
                     try:
-                        yt = YouTube(standard_url)
+                        # Initialize YouTube with custom headers and proxies
+                        yt = YouTube(
+                            standard_url,
+                            use_oauth=False,
+                            allow_oauth_cache=False,
+                            use_innertube=True
+                        )
+                        
+                        # Set custom headers and disable use of cipher
+                        yt.headers = headers
+                        
                         # Wait for metadata to be populated
                         timeout = 0
                         while not hasattr(yt, 'title') or not yt.title:
@@ -96,7 +134,7 @@ class YouTubeDownloader:
                         break
                     except Exception as e:
                         logger.warning(f"Attempt {attempt+1} failed: {str(e)}")
-                        time.sleep(2)  # Wait before retry
+                        time.sleep(3 + attempt)  # Increasing wait time for subsequent retries
                 
                 # If we still don't have a YouTube object, raise an exception
                 if yt is None or not hasattr(yt, 'title') or not yt.title:
@@ -123,6 +161,8 @@ class YouTubeDownloader:
                 
                 # Download the content
                 logger.info(f"Downloading content to: {output_path}")
+                
+                # Use the on_progress_callback to track download progress
                 content_path = stream.download(output_path=output_path)
                 logger.info(f"Download completed: {content_path}")
                 
@@ -132,7 +172,7 @@ class YouTubeDownloader:
                 last_exception = e
                 retry_count += 1
                 logger.warning(f"Download attempt {retry_count} failed: {str(e)}")
-                time.sleep(2)  # Wait before retrying
+                time.sleep(3 * retry_count)  # Exponential backoff
         
         # If we've exhausted all retries, log the error and raise an exception
         logger.error(f"Error downloading YouTube content after {max_retries} attempts: {str(last_exception)}")

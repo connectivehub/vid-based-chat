@@ -7,35 +7,60 @@ import numpy as np
 from moviepy.editor import VideoFileClip
 from PIL import Image
 import io
+import logging
+
+# Configure logging
+logger = logging.getLogger(__name__)
 
 class VideoProcessor:
     """
-    Class to process video files for use with the Gemini API.
+    Class to process video files for use with the AI API.
     Handles video frame extraction, audio processing, and preparing data for model input.
+    Optimized for cloud deployment with resource constraints.
     """
     
-    def __init__(self, video_path: str, sample_rate: int = 1):
+    def __init__(self, video_path: str, sample_rate: int = 1, max_frames: int = 20, max_resolution: int = 480):
         """
         Initialize the VideoProcessor with a video path.
         
         Args:
             video_path: Path to the video file
-            sample_rate: Number of frames to extract per second (default: 1 - matches Gemini's sampling rate)
+            sample_rate: Number of frames to extract per second (default: 1)
+            max_frames: Maximum number of frames to extract total (default: 20)
+            max_resolution: Maximum height of frames in pixels (default: 480)
         """
         self.video_path = video_path
         self.sample_rate = sample_rate
+        self.max_frames = max_frames
+        self.max_resolution = max_resolution
         self.frames = []
         self.video_info = {}
         self.audio_path = None
         
-        # Extract video information and frames
-        self._extract_video_info()
-        self._extract_frames()
-        self._extract_audio()
+        logger.info(f"Initializing VideoProcessor for {video_path}")
+        
+        try:
+            # Extract video information
+            self._extract_video_info()
+            
+            # Extract frames with optimized settings
+            self._extract_frames_optimized()
+            
+            # Skip audio extraction for cloud deployment
+            # self._extract_audio()
+            
+            logger.info(f"VideoProcessor initialized successfully with {len(self.frames)} frames")
+        except Exception as e:
+            logger.error(f"Error initializing VideoProcessor: {str(e)}", exc_info=True)
+            raise
     
     def _extract_video_info(self) -> None:
         """Extract basic information about the video."""
+        logger.info("Extracting video information")
         cap = cv2.VideoCapture(self.video_path)
+        
+        if not cap.isOpened():
+            raise ValueError(f"Could not open video file: {self.video_path}")
         
         # Get video properties
         self.video_info = {
@@ -46,49 +71,69 @@ class VideoProcessor:
             "duration": int(cap.get(cv2.CAP_PROP_FRAME_COUNT) / cap.get(cv2.CAP_PROP_FPS))
         }
         
+        logger.info(f"Video info extracted: {self.video_info}")
         cap.release()
     
-    def _extract_frames(self) -> None:
-        """Extract frames from the video at the specified sample rate."""
+    def _extract_frames_optimized(self) -> None:
+        """Extract frames with optimized settings for cloud deployment."""
+        logger.info("Extracting frames with optimized settings")
         cap = cv2.VideoCapture(self.video_path)
+        
+        if not cap.isOpened():
+            raise ValueError(f"Could not open video file for frame extraction: {self.video_path}")
+        
         fps = self.video_info["fps"]
         total_frames = self.video_info["frame_count"]
         
-        # Calculate frame indices to extract based on sample rate
-        frame_indices = []
-        for i in range(0, int(total_frames), int(fps / self.sample_rate)):
-            frame_indices.append(i)
+        # Limit maximum number of frames to extract
+        frame_skip = max(1, int(total_frames / self.max_frames))
+        frame_skip = max(frame_skip, int(fps / self.sample_rate))
         
-        # Extract frames at calculated indices
-        for frame_idx in frame_indices:
-            cap.set(cv2.CAP_PROP_POS_FRAMES, frame_idx)
+        logger.info(f"Frame skip rate: {frame_skip} (extracting approximately 1 frame every {frame_skip} frames)")
+        
+        # Calculate scale factor for resizing
+        height = self.video_info["height"]
+        scale = 1.0
+        if height > self.max_resolution:
+            scale = self.max_resolution / height
+            logger.info(f"Scaling frames by factor of {scale}")
+        
+        # Extract frames at calculated intervals
+        count = 0
+        for i in range(0, int(total_frames), frame_skip):
+            if count >= self.max_frames:
+                break
+                
+            cap.set(cv2.CAP_PROP_POS_FRAMES, i)
             ret, frame = cap.read()
-            if ret:
-                # Convert from BGR to RGB (OpenCV uses BGR by default)
-                frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-                self.frames.append(frame_rgb)
+            
+            if not ret:
+                continue
+                
+            # Resize frame if needed
+            if scale < 1.0:
+                new_width = int(self.video_info["width"] * scale)
+                new_height = int(self.video_info["height"] * scale)
+                frame = cv2.resize(frame, (new_width, new_height), interpolation=cv2.INTER_AREA)
+            
+            # Convert from BGR to RGB (OpenCV uses BGR by default)
+            frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            self.frames.append(frame_rgb)
+            count += 1
+            
+            # Log progress periodically
+            if count % 5 == 0:
+                logger.info(f"Extracted {count} frames so far")
         
+        logger.info(f"Completed frame extraction: {len(self.frames)} frames extracted")
         cap.release()
     
     def _extract_audio(self) -> None:
-        """Extract audio from the video if present."""
-        try:
-            # Create temporary file for audio
-            temp_audio = tempfile.NamedTemporaryFile(delete=False, suffix=".mp3")
-            temp_audio.close()
-            
-            # Extract audio using moviepy
-            video_clip = VideoFileClip(self.video_path)
-            if video_clip.audio is not None:
-                video_clip.audio.write_audiofile(temp_audio.name, verbose=False, logger=None)
-                self.audio_path = temp_audio.name
-            
-            video_clip.close()
-        except Exception as e:
-            print(f"Error extracting audio: {e}")
-            if self.audio_path and os.path.exists(self.audio_path):
-                os.unlink(self.audio_path)
-            self.audio_path = None
+        """
+        Extract audio from the video if present.
+        Note: This is disabled in cloud deployment to save resources.
+        """
+        pass
     
     def get_video_data(self) -> Dict[str, Any]:
         """
@@ -100,7 +145,7 @@ class VideoProcessor:
         return {
             "info": self.video_info,
             "frame_count": len(self.frames),
-            "has_audio": self.audio_path is not None
+            "has_audio": False
         }
     
     def get_frames(self, start_time: Optional[float] = None, 
@@ -129,45 +174,65 @@ class VideoProcessor:
         
         return self.frames[start_idx:end_idx]
     
-    def prepare_for_gemini(self, max_frames: int = 50) -> List[Dict[str, Any]]:
+    def prepare_for_gemini(self, max_frames: int = 20) -> List[Dict[str, Any]]:
         """
-        Prepare video data for Gemini model input.
+        Prepare video data for AI model input.
         
         Args:
-            max_frames: Maximum number of frames to include (to manage token usage)
+            max_frames: Maximum number of frames to include (default: 20)
             
         Returns:
-            List of frames in Gemini-compatible format
+            List of frames in AI-compatible format
         """
+        logger.info(f"Preparing frames for Gemini API, limiting to {max_frames} frames")
+        
         # If we have more frames than max_frames, sample evenly across the video
         frames_to_use = self.frames
         if len(self.frames) > max_frames:
             indices = np.linspace(0, len(self.frames) - 1, max_frames, dtype=int)
             frames_to_use = [self.frames[i] for i in indices]
+            logger.info(f"Sampled {len(frames_to_use)} frames from {len(self.frames)} total frames")
         
         # Convert frames to PIL images and then to base64
         gemini_frames = []
         for i, frame in enumerate(frames_to_use):
-            pil_image = Image.fromarray(frame)
-            buffer = io.BytesIO()
-            pil_image.save(buffer, format="JPEG")
-            image_data = buffer.getvalue()
-            
-            # Encode as base64
-            base64_image = base64.b64encode(image_data).decode("utf-8")
-            
-            # Calculate timestamp
-            timestamp = i / self.sample_rate
-            
-            gemini_frames.append({
-                "image": base64_image,
-                "timestamp": timestamp
-            })
+            try:
+                # Convert and compress image
+                pil_image = Image.fromarray(frame)
+                buffer = io.BytesIO()
+                
+                # Use JPEG with compression to reduce size
+                pil_image.save(buffer, format="JPEG", quality=85)
+                image_data = buffer.getvalue()
+                
+                # Encode as base64
+                base64_image = base64.b64encode(image_data).decode("utf-8")
+                
+                # Calculate timestamp
+                timestamp = i / self.sample_rate
+                
+                gemini_frames.append({
+                    "image": base64_image,
+                    "timestamp": timestamp
+                })
+                
+                # Log progress periodically
+                if (i+1) % 5 == 0 or i == len(frames_to_use) - 1:
+                    logger.info(f"Processed {i+1}/{len(frames_to_use)} frames for API")
+                    
+            except Exception as e:
+                logger.error(f"Error processing frame {i}: {str(e)}")
+                continue
         
+        logger.info(f"Completed preparing {len(gemini_frames)} frames for API")
         return gemini_frames
     
     def cleanup(self) -> None:
-        """Clean up any temporary files."""
+        """Clean up any temporary files and release memory."""
+        logger.info("Cleaning up VideoProcessor resources")
         if self.audio_path and os.path.exists(self.audio_path):
             os.unlink(self.audio_path)
-            self.audio_path = None 
+            self.audio_path = None
+            
+        # Clear frames to free memory
+        self.frames = [] 
