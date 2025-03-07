@@ -8982,11 +8982,2648 @@ First, let's update your requirements.txt file:
 
 _****_
 
+Read file: requirements.txt
+
+---
+
+_****_
+
+Now let's create a packages.txt file for system dependencies that might be required for video processing:
+
+---
+
+_****_
+
+```diff
+- libgl1
+- libglib2.0-0
++ ffmpeg
+  libsm6
++ libxext6
+  libxrender1
+- libxext6
+- ffmpeg 
++ libgl1-mesa-glx 
+```
+
+---
+
+_****_
+
+Let's now update the requirements.txt file to ensure it contains the most compatible package versions for Streamlit Cloud:
+
+---
+
+_****_
+
+```diff
+  streamlit==1.28.0
+  moviepy==1.0.3
+- opencv-python==4.8.1.78
++ opencv-python-headless==4.8.1.78
+  numpy==1.26.0
+  pillow==10.1.0
+  pytubefix==8.12.3
+  requests==2.31.0
+  watchdog==3.0.0
++ protobuf==4.25.1
++ typing-extensions>=4.0.0 
+```
+
+---
+
+_****_
+
+Let's also check the app.py to see if there are any specific issues that could be causing deployment problems:
+
+---
+
+_****_
+
+<details>
+            <summary>Grep search for "import (google|opencv|cv2|moviepy|VideoProcessor)" • **5** files</summary>
+        
+| File | Line | Match |
+|------|------|-------|
+| `file:///c%3A/Users/break/OneDrive/Desktop/Coding/connective-goama-vidchat/utils/__init__.py` | Lundefined | `from .video_processor import VideoProcessor` |
+| `file:///c%3A/Users/break/OneDrive/Desktop/Coding/connective-goama-vidchat/utils/video_processor.py` | L1 | `import cv2` |
+| `file:///c%3A/Users/break/OneDrive/Desktop/Coding/connective-goama-vidchat/utils/chat_manager.py` | Lundefined | `import google.generativeai as genai` |
+| `file:///c%3A/Users/break/OneDrive/Desktop/Coding/connective-goama-vidchat/utils/chat_manager.py` | L6 | `from .video_processor import VideoProcessor` |
+| `file:///c%3A/Users/break/OneDrive/Desktop/Coding/connective-goama-vidchat/app.py` | L7 | `import google.generativeai as genai` |
+| `file:///c%3A/Users/break/OneDrive/Desktop/Coding/connective-goama-vidchat/app.py` | L8 | `from utils.video_processor import VideoProcessor` |
+| `file:///c%3A/Users/break/OneDrive/Desktop/Coding/connective-goama-vidchat/.specstory/history/building-an-ai-chatbot-for-video-understanding.md` | L149 | `+ import google.generativeai as genai` |
+| `file:///c%3A/Users/break/OneDrive/Desktop/Coding/connective-goama-vidchat/.specstory/history/building-an-ai-chatbot-for-video-understanding.md` | L150 | `+ from utils.video_processor import VideoProcessor` |
+| `file:///c%3A/Users/break/OneDrive/Desktop/Coding/connective-goama-vidchat/.specstory/history/building-an-ai-chatbot-for-video-understanding.md` | L348 | `+ import cv2` |
+| `file:///c%3A/Users/break/OneDrive/Desktop/Coding/connective-goama-vidchat/.specstory/history/building-an-ai-chatbot-for-video-understanding.md` | L534 | `+ import google.generativeai as genai` |
+| `file:///c%3A/Users/break/OneDrive/Desktop/Coding/connective-goama-vidchat/.specstory/history/building-an-ai-chatbot-for-video-understanding.md` | L540 | `+ from .video_processor import VideoProcessor` |
+| `file:///c%3A/Users/break/OneDrive/Desktop/Coding/connective-goama-vidchat/.specstory/history/building-an-ai-chatbot-for-video-understanding.md` | L700 | `+ from .video_processor import VideoProcessor` |
+| `file:///c%3A/Users/break/OneDrive/Desktop/Coding/connective-goama-vidchat/.specstory/history/building-an-ai-chatbot-for-video-understanding.md` | L1042 | `from .video_processor import VideoProcessor` |
+| `file:///c%3A/Users/break/OneDrive/Desktop/Coding/connective-goama-vidchat/.specstory/history/building-an-ai-chatbot-for-video-understanding.md` | L1062 | `import google.generativeai as genai` |
+| `file:///c%3A/Users/break/OneDrive/Desktop/Coding/connective-goama-vidchat/.specstory/history/building-an-ai-chatbot-for-video-understanding.md` | L1065 | `from utils.video_processor import VideoProcessor` |
+| `file:///c%3A/Users/break/OneDrive/Desktop/Coding/connective-goama-vidchat/.specstory/history/building-an-ai-chatbot-for-video-understanding.md` | L1599 | `from utils.video_processor import VideoProcessor` |
+| `file:///c%3A/Users/break/OneDrive/Desktop/Coding/connective-goama-vidchat/.specstory/history/building-an-ai-chatbot-for-video-understanding.md` | L1601 | `from .video_processor import VideoProcessor` |
+| `file:///c%3A/Users/break/OneDrive/Desktop/Coding/connective-goama-vidchat/.specstory/history/building-an-ai-chatbot-for-video-understanding.md` | L1603 | `import cv2` |
+| `file:///c%3A/Users/break/OneDrive/Desktop/Coding/connective-goama-vidchat/.specstory/history/building-an-ai-chatbot-for-video-understanding.md` | L1611 | `Based on the traceback, the error occurs when trying to import cv2 in the video_processor.py file. The error is clear: "ModuleNotFoundError: No module named 'cv2'".` |
+| `file:///c%3A/Users/break/OneDrive/Desktop/Coding/connective-goama-vidchat/.specstory/history/building-an-ai-chatbot-for-video-understanding.md` | L7409 | `| `file:///c%3A/Users/break/OneDrive/Desktop/Coding/connective-goama-vidchat/utils/__init__.py` | Lundefined | `from .video_processor import VideoProcessor` |` |
+| `file:///c%3A/Users/break/OneDrive/Desktop/Coding/connective-goama-vidchat/.specstory/history/building-an-ai-chatbot-for-video-understanding.md` | L7415 | `| `file:///c%3A/Users/break/OneDrive/Desktop/Coding/connective-goama-vidchat/utils/chat_manager.py` | L6 | `from .video_processor import VideoProcessor` |` |
+| `file:///c%3A/Users/break/OneDrive/Desktop/Coding/connective-goama-vidchat/.specstory/history/building-an-ai-chatbot-for-video-understanding.md` | L7421 | `| `file:///c%3A/Users/break/OneDrive/Desktop/Coding/connective-goama-vidchat/app.py` | L7 | `from utils.video_processor import VideoProcessor` |` |
+| `file:///c%3A/Users/break/OneDrive/Desktop/Coding/connective-goama-vidchat/.specstory/history/building-an-ai-chatbot-for-video-understanding.md` | L7440 | `⟪ 146 characters skipped ⟫ | L150 | `+ from utils.video_processor import VideoProcessor` |` |
+| `file:///c%3A/Users/break/OneDrive/Desktop/Coding/connective-goama-vidchat/.specstory/history/building-an-ai-chatbot-for-video-understanding.md` | L7448 | `⟪ 141 characters skipped ⟫g.md` | L540 | `+ from .video_processor import VideoProcessor` |` |
+| `file:///c%3A/Users/break/OneDrive/Desktop/Coding/connective-goama-vidchat/.specstory/history/building-an-ai-chatbot-for-video-understanding.md` | L7451 | `⟪ 141 characters skipped ⟫g.md` | L700 | `+ from .video_processor import VideoProcessor` |` |
+| `file:///c%3A/Users/break/OneDrive/Desktop/Coding/connective-goama-vidchat/.specstory/history/building-an-ai-chatbot-for-video-understanding.md` | L7464 | `⟪ 140 characters skipped ⟫ng.md` | L1042 | `from .video_processor import VideoProcessor` |` |
+| `file:///c%3A/Users/break/OneDrive/Desktop/Coding/connective-goama-vidchat/.specstory/history/building-an-ai-chatbot-for-video-understanding.md` | L7467 | `⟪ 145 characters skipped ⟫` | L1065 | `from utils.video_processor import VideoProcessor` |` |
+| `file:///c%3A/Users/break/OneDrive/Desktop/Coding/connective-goama-vidchat/.specstory/history/building-an-ai-chatbot-for-video-understanding.md` | L7477 | `⟪ 145 characters skipped ⟫` | L1599 | `from utils.video_processor import VideoProcessor` |` |
+| `file:///c%3A/Users/break/OneDrive/Desktop/Coding/connective-goama-vidchat/.specstory/history/building-an-ai-chatbot-for-video-understanding.md` | L7478 | `⟪ 140 characters skipped ⟫ng.md` | L1601 | `from .video_processor import VideoProcessor` |` |
+| `file:///c%3A/Users/break/OneDrive/Desktop/Coding/connective-goama-vidchat/.specstory/history/building-an-ai-chatbot-for-video-understanding.md` | L8646 | `import google.generativeai as genai` |
+| `file:///c%3A/Users/break/OneDrive/Desktop/Coding/connective-goama-vidchat/.specstory/history/building-an-ai-chatbot-for-video-understanding.md` | L8649 | `from utils.video_processor import VideoProcessor` |
+
+</details>
+
+---
+
+_****_
+
+Let's modify the VideoProcessor class to make it work better with Streamlit Cloud's environment:
+
+---
+
+_****_
+
+Read file: utils/video_processor.py
+
+---
+
+_****_
+
+Let's add a try-except block to handle OpenCV import errors gracefully. Since we've updated to using `opencv-python-headless` in requirements.txt, we also need to make sure the video_processor is compatible with this:
+
+---
+
+_****_
+
+```diff
+  import os
+- import cv2
+- import base64
++ import logging
+  import tempfile
+  from typing import List, Dict, Any, Optional
+  import numpy as np
+- from moviepy.editor import VideoFileClip
++ import io
++ import base64
+  from PIL import Image
+- import io
+- import logging
++ 
++ # Try to import OpenCV with fallbacks
++ try:
++     import cv2
++ except ImportError:
++     try:
++         import cv2.cv2 as cv2
++     except ImportError:
++         logging.error("OpenCV (cv2) could not be imported. Video processing will not work.")
++         cv2 = None
++ 
++ # Try to import moviepy with fallback
++ try:
++     from moviepy.editor import VideoFileClip
++ except ImportError:
++     logging.error("MoviePy could not be imported. Audio extraction will not work.")
++     VideoFileClip = None
+  
+  # Configure logging
+```
+
+---
+
+_****_
+
+Now let's check the app initialization part to ensure it handles missing dependencies gracefully:
+
+---
+
+_****_
+
+```diff
+  from dotenv import load_dotenv
+  import google.generativeai as genai
+- from utils.video_processor import VideoProcessor
+- from utils.chat_manager import ChatManager
+- from utils.youtube_downloader import YouTubeDownloader
+  
+  # Configure logging
+  logger = logging.getLogger(__name__)
+  
++ # Try to import required modules with graceful error handling
++ try:
++     from utils.video_processor import VideoProcessor
++     from utils.chat_manager import ChatManager
++     from utils.youtube_downloader import YouTubeDownloader
++     IMPORTS_SUCCESSFUL = True
++ except ImportError as e:
++     logger.error(f"Error importing required modules: {str(e)}")
++     IMPORTS_SUCCESSFUL = False
++ 
+  # Set default model name
+  MODEL_NAME = "models/gemini-1.5-flash"
+```
+
+---
+
+_****_
+
+Now, let's update the main function to display a helpful error message if the dependencies aren't installed correctly:
+
+---
+
+_****_
+
+```diff
+      logger.info("Main application started")
+      
++     # Check for missing dependencies
++     if not IMPORTS_SUCCESSFUL:
++         st.error("⚠️ Some required dependencies couldn't be loaded. The application may not function correctly.")
++         st.info("Please check the app logs for more details on which dependencies failed to load.")
++         
+      # Initialize session state variables if they don't exist
+      if "chat_history" not in st.session_state:
+```
+
+---
+
+_****_
+
+Now, let's update the `.streamlit/config.toml` file to set some specific configurations for Streamlit Cloud:
+
+---
+
+_****_
+
 
 
 ---
 
 _****_
+
+Let's make sure the `.streamlit` directory exists and then create the config file:
+
+---
+
+_****_
+
+```bash
+mkdir -p .streamlit
+```
+
+```
+PS C:\Users\break\OneDrive\Desktop\Coding\connective-goama-vidchat> mkdir -p .streamlit
+mkdir : An item with the specified name C:\Users\break\OneDrive\Desktop\Coding\connective-goama-vidchat\.streamlit already exists.
+At line:1 char:1
++ mkdir -p .streamlit
++ ~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ResourceExists: (C:\Users\break\...chat\.streamlit:String) [New-Item], IOException
+    + FullyQualifiedErrorId : DirectoryExist,Microsoft.PowerShell.Commands.NewItemCommand
+
+PS C:\Users\break\OneDrive\Desktop\Coding\connective-goama-vidchat>
+```
+
+---
+
+_****_
+
+The directory already exists. Now let's create the config.toml file:
+
+---
+
+_****_
+
+
+
+---
+
+_****_
+
+Let's now commit and push our changes to GitHub:
+
+---
+
+_****_
+
+```bash
+git add .
+```
+
+```
+PS C:\Users\break\OneDrive\Desktop\Coding\connective-goama-vidchat> git add .
+warning: in the working copy of '.specstory/history/.what-is-this.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.specstory/history/building-an-ai-chatbot-for-video-understanding.md', LF will be replaced by CRLF the next time Git touches it
+PS C:\Users\break\OneDrive\Desktop\Coding\connective-goama-vidchat>
+```
+
+---
+
+_****_
+
+```bash
+git commit -m "Fix dependency issues for Streamlit Cloud deployment"
+```
+
+```
+PS C:\Users\break\OneDrive\Desktop\Coding\connective-goama-vidchat> git commit -m "Fix dependency issues for Streamlit Cloud deployment"
+ 5 files changed, 1676 insertions(+), 14 deletions(-)
+PS C:\Users\break\OneDrive\Desktop\Coding\connective-goama-vidchat>
+
+```
+
+---
+
+_****_
+
+```bash
+git push
+```
+
+```
+PS C:\Users\break\OneDrive\Desktop\Coding\connective-goama-vidchat> git push
+fatal: unable to connect to cache daemon: Unknown error
+Enumerating objects: 19, done.
+Writing objects: 100% (10/10), 15.15 KiB | 1.68 MiB/s, done.
+Total 10 (delta 7), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (7/7), completed with 7 local objects.
+To https://github.com/connectivehub/vid-based-chat.git
+   6702028..5cb15f3  master -> master
+PS C:\Users\break\OneDrive\Desktop\Coding\connective-goama-vidchat>
+```
+
+---
+
+_****_
+
+## Fixed Dependency Issues for Streamlit Cloud
+
+I've made several important changes to address the deployment issues on Streamlit Cloud:
+
+### 1. Updated Requirements.txt
+- Changed `opencv-python` to `opencv-python-headless`, which is better suited for headless server environments
+- Added `protobuf==4.25.1` to ensure compatibility with Google Generative AI
+- Added `typing-extensions>=4.0.0` which is required by several dependencies
+
+### 2. Added System Dependencies
+- Created/updated `packages.txt` with essential system packages:
+  - `ffmpeg` for video processing
+  - `libsm6`, `libxext6`, `libxrender1`, and `libgl1-mesa-glx` for OpenCV
+
+### 3. Made Code More Resilient
+- Added graceful import error handling for OpenCV and MoviePy
+- Modified the VideoProcessor to handle missing dependencies
+- Updated the main app to display helpful error messages if dependencies fail to load
+
+### 4. Streamlit Configuration
+- Ensured `.streamlit/config.toml` has appropriate settings for cloud deployment
+- Limited upload size and configured other performance settings
+
+### Next Steps
+
+1. **Check Streamlit Cloud Deployment**: The changes have been pushed to GitHub, so Streamlit Cloud should automatically redeploy your app with the fixed dependencies.
+
+2. **Monitor Application Logs**: If issues persist, you'll need to check the Streamlit Cloud logs for more specific error messages. You can find these in the Streamlit Cloud dashboard.
+
+3. **Watch for Specific Errors**: If you encounter specific errors after this update, please share them so we can make further adjustments.
+
+4. **API Key Setup**: Make sure you've added your `GOOGLE_API_KEY` as a secret in the Streamlit Cloud settings for your app.
+
+These changes should address the dependency installation issues while also making your app more resilient when running in the cloud environment. The application will now gracefully handle missing dependencies and display helpful error messages rather than completely failing.
+
+---
+
+_**User**_
+
+uhhh same error?
+
+lockdown-install.js:1 Removing unpermitted intrinsics
+cdn.segment.com/analytics.js/v1/GI7vYWHNmWwHbyFjBrvL0jOBA1TpZOXC/analytics.min.js:1 
+        
+        
+       Failed to load resource: net::ERR_BLOCKED_BY_CLIENT
+lockdown-install.js:1 Removing unpermitted intrinsics
+index-CV3JOi3C.js:202 INITIAL -> (13, 0, ) -> ERROR
+107XHR finished loading: GET "<URL>".
+index-CV3JOi3C.js:202 ERROR -> (7, undefined, ) -> BOOTING
+8XHR finished loading: POST "<URL>".
+index-CV3JOi3C.js:202 BOOTING -> (13, 0, ) -> ERROR
+index-CV3JOi3C.js:202 ERROR -> (0, 0, ) -> BOOTING
+index-CV3JOi3C.js:238 WebSocket connection to 'wss://connective-video-chat.streamlit.app/~/logstream' failed: WebSocket is closed before the connection is established.
+(anonymous) @ index-CV3JOi3C.js:238
+Ie.current @ index-CV3JOi3C.js:238
+uu @ index-CV3JOi3C.js:41
+ka @ index-CV3JOi3C.js:41
+Cl @ index-CV3JOi3C.js:41
+Jp @ index-CV3JOi3C.js:41
+Us @ index-CV3JOi3C.js:41
+vp @ index-CV3JOi3C.js:41
+rs @ index-CV3JOi3C.js:39
+(anonymous) @ index-CV3JOi3C.js:41
+XMLHttpRequest.send
+ie @ index-CV3JOi3C.js:198
+(anonymous) @ index-CV3JOi3C.js:51
+xhr @ index-CV3JOi3C.js:51
+dispatchRequest @ index-CV3JOi3C.js:53
+Promise.then
+_request @ index-CV3JOi3C.js:54
+request @ index-CV3JOi3C.js:53
+(anonymous) @ index-CV3JOi3C.js:49
+(anonymous) @ index-CV3JOi3C.js:146
+(anonymous) @ index-CV3JOi3C.js:146
+(anonymous) @ index-CV3JOi3C.js:146
+Promise.then
+getAppStatusFromSubdomain @ index-CV3JOi3C.js:146
+fetchAppStatus @ index-CV3JOi3C.js:196
+(anonymous) @ index-CV3JOi3C.js:49
+(anonymous) @ index-CV3JOi3C.js:49
+(anonymous) @ index-CV3JOi3C.js:49
+ke @ index-CV3JOi3C.js:49
+de @ index-CV3JOi3C.js:49
+internalMutate @ index-CV3JOi3C.js:49
+doAppRestart @ index-CV3JOi3C.js:239
+await in doAppRestart
+onClick @ index-CV3JOi3C.js:239
+qi @ index-CV3JOi3C.js:38
+Rn @ index-CV3JOi3C.js:38
+Ai @ index-CV3JOi3C.js:38
+Bl @ index-CV3JOi3C.js:38
+Ud @ index-CV3JOi3C.js:38
+(anonymous) @ index-CV3JOi3C.js:38
+Od @ index-CV3JOi3C.js:41
+zi @ index-CV3JOi3C.js:38
+jc @ index-CV3JOi3C.js:38
+Ks @ index-CV3JOi3C.js:38
+Gs @ index-CV3JOi3C.js:38
+index-CV3JOi3C.js:202 BOOTING -> (13, 0, ) -> ERROR
+
+---
+
+_**Assistant**_
+
+<think>It looks like we're still experiencing deployment issues with the Streamlit Cloud application. The browser console errors show that there are websocket connection failures and the application is stuck in a BOOTING -> ERROR -> BOOTING loop.
+
+Based on the information from the Streamlit documentation provided in the web search results and the console errors, here are some potential issues and solutions to consider:
+
+1. It seems there might be issues with CORS and websocket connections, which is common in cloud deployments.
+2. There could be an issue with the XSRF protection.
+3. The application might be hitting resource limits.
+4. The specific issue with the "installer returned a non-zero exit code" suggests there might still be problems with system dependencies.
+
+Let's create a more focused approach to fix these issues:</think>You're still seeing the same deployment error in Streamlit Cloud. Let's implement some focused fixes specifically for websocket connection and system dependency issues. Based on the console errors you're seeing and Streamlit documentation, we need to address some specific configuration issues:
+
+## 1. Update the `.streamlit/config.toml` file with crucial websocket settings
+
+---
+
+_****_
+
+
+
+---
+
+_****_
+
+
+
+---
+
+_**User**_
+
+ill just paste the whole terminal console so you can see what migth be the issue:
+
+[     UTC     ] Logs for connective-video-chat.streamlit.app/
+
+────────────────────────────────────────────────────────────────────────────────────────
+
+[12:06:26] 🚀 Starting up repository: 'vid-based-chat', branch: 'master', main module: 'app.py'
+
+[12:06:26] 🐙 Cloning repository...
+
+[12:06:27] 🐙 Cloning into '/mount/src/vid-based-chat'...
+Warning: Permanently added the ED25519 host key for IP address '140.82.116.4' to the list of known hosts.
+
+[12:06:27] 🐙 Cloned repository!
+
+[12:06:27] 🐙 Pulling code changes from Github...
+
+[12:06:29] 📦 Processing dependencies...
+
+[12:06:29] 📦 Apt dependencies were installed from /mount/src/vid-based-chat/packages.txt using apt-get.
+
+Hit:1 http://deb.debian.org/debian bullseye InRelease
+
+Get:2 http://deb.debian.org/debian-security bullseye-security InRelease [27.2 kB]
+
+Get:3 http://deb.debian.org/debian bullseye-updates InRelease [44.1 kB]
+
+Get:4 https://packages.microsoft.com/debian/11/prod bullseye InRelease [3649 B]
+
+Get:5 http://deb.debian.org/debian-security bullseye-security/main amd64 Packages [350 kB]
+
+Get:6 https://packages.microsoft.com/debian/11/prod bullseye/main arm64 Packages [40.4 kB]
+
+Get:7 https://packages.microsoft.com/debian/11/prod bullseye/main amd64 Packages [190 kB]
+
+Fetched 654 kB in 1s (804 kB/s)
+
+Reading package lists...[2025-03-07 12:06:31.024671] 
+
+Reading package lists...[2025-03-07 12:06:31.813047] 
+
+Building dependency tree...[2025-03-07 12:06:32.037907] 
+
+Reading state information...[2025-03-07 12:06:32.038290] 
+
+libxext6 is already the newest version (2:1.3.3-1.1).
+
+libxext6 set to manually installed.
+
+The following additional packages will be installed:
+
+  alsa-topology-conf alsa-ucm-conf fontconfig i965-va-driver
+
+  intel-media-va-driver libaacs0 libaom0 libasound2 libasound2-data libass9
+
+  libasyncns0 libavc1394-0 libavcodec58 libavdevice58 libavfilter7
+
+  libavformat58 libavresample4 libavutil56 libbdplus0 libblas3 libbluray2
+
+  libbs2b0 libcaca0 libcairo-gobject2 libcairo2 libcdio-cdda2
+
+  libcdio-paranoia2 libcdio19 libchromaprint1 libcodec2-0.9 libdatrie1
+
+  libdav1d4 libdc1394-25 libdrm-amdgpu1 libdrm-common libdrm-intel1
+
+  libdrm-nouveau2 libdrm-radeon1 libdrm2 libfftw3-double3 libflac8 libflite1
+
+  libfribidi0 libgbm1 libgdk-pixbuf-2.0-0 libgdk-pixbuf2.0-bin
+
+  libgdk-pixbuf2.0-common libgfortran5 libgl1 libgl1-mesa-dri libglapi-mesa
+
+  libglvnd0 libglx-mesa0 libglx0 libgme0 libgraphite2-3 libgsm1 libharfbuzz0b
+
+  libice6 libiec61883-0 libigdgmm11 libjack-jackd2-0 liblapack3 liblilv-0-0
+
+  libllvm11 libmfx1 libmp3lame0 libmpg123-0 libmysofa1 libnorm1 libnuma1
+
+  libogg0 libopenal-data libopenal1 libopenjp2-7 libopenmpt0 libopus0
+
+  libpango-1.0-0 libpangocairo-1.0-0 libpangoft2-1.0-0 libpciaccess0
+
+  libpgm-5.3-0 libpixman-1-0 libpocketsphinx3 libpostproc55 libpulse0
+
+  librabbitmq4 libraw1394-11 librsvg2-2 librsvg2-common librubberband2
+
+  libsamplerate0 libsdl2-2.0-0 libsensors-config libsensors5 libserd-0-0
+
+  libshine3 libslang2 libsnappy1v5 libsndfile1 libsndio7.0 libsodium23
+
+  libsord-0-0 libsoxr0 libspeex1 libsphinxbase3 libsratom-0-0 libsrt1.4-gnutls
+
+  libssh-gcrypt-4 libswresample3 libswscale5 libthai-data libthai0 libtheora0
+
+  libtwolame0 libudfread0 libusb-1.0-0 libva-drm2 libva-x11-2 libva2
+
+  libvdpau-va-gl1 libvdpau1 libvidstab1.1 libvorbis0a libvorbisenc2
+
+  libvorbisfile3 libvpx6 libvulkan1 libwavpack1 libwayland-client0
+
+  libwayland-cursor0 libwayland-egl1 libwayland-server0 libwebpmux3 libwrap0
+
+  libx11-xcb1 libx264-160 libx265-192 libxcb-dri2-0 libxcb-dri3-0 libxcb-glx0
+
+  libxcb-present0 libxcb-randr0 libxcb-render0 libxcb-shape0 libxcb-shm0
+
+  libxcb-sync1 libxcb-xfixes0 libxcursor1 libxdamage1 libxfixes3 libxi6
+
+  libxinerama1 libxkbcommon0 libxrandr2 libxshmfence1 libxss1 libxv1
+
+  libxvidcore4 libxxf86vm1 libz3-4 libzmq5 libzvbi-common libzvbi0
+
+  mesa-va-drivers mesa-vdpau-drivers mesa-vulkan-drivers ocl-icd-libopencl1
+
+  pocketsphinx-en-us va-driver-all vdpau-driver-all x11-common xkb-data
+
+Suggested packages:
+
+  ffmpeg-doc i965-va-driver-shaders libasound2-plugins alsa-utils
+
+  libbluray-bdj libfftw3-bin libfftw3-dev jackd2 libportaudio2 opus-tools
+
+  pciutils pulseaudio libraw1394-doc librsvg2-bin xdg-utils lm-sensors serdi
+
+  sndiod sordi speex opencl-icd nvidia-vdpau-driver
+
+  nvidia-tesla-440-vdpau-driver nvidia-tesla-418-vdpau-driver
+
+  nvidia-legacy-390xx-vdpau-driver nvidia-legacy-340xx-vdpau-driver
+
+The following NEW packages will be installed:
+
+  alsa-topology-conf alsa-ucm-conf ffmpeg fontconfig i965-va-driver
+
+  intel-media-va-driver libaacs0 libaom0 libasound2 libasound2-data libass9
+
+  libasyncns0 libavc1394-0 libavcodec58 libavdevice58 libavfilter7
+
+  libavformat58 libavresample4 libavutil56 libbdplus0 libblas3 libbluray2
+
+  libbs2b0 libcaca0 libcairo-gobject2 libcairo2 libcdio-cdda2
+
+  libcdio-paranoia2 libcdio19 libchromaprint1 libcodec2-0.9 libdatrie1
+
+  libdav1d4 libdc1394-25 libdrm-amdgpu1 libdrm-common libdrm-intel1
+
+  libdrm-nouveau2 libdrm-radeon1 libdrm2 libfftw3-double3 libflac8 libflite1
+
+  libfribidi0 libgbm1 libgdk-pixbuf-2.0-0 libgdk-pixbuf2.0-bin
+
+  libgdk-pixbuf2.0-common libgfortran5 libgl1 libgl1-mesa-dri libgl1-mesa-glx
+
+  libglapi-mesa libglvnd0 libglx-mesa0 libglx0 libgme0 libgraphite2-3 libgsm1
+
+  libharfbuzz0b libice6 libiec61883-0 libigdgmm11 libjack-jackd2-0 liblapack3
+
+  liblilv-0-0 libllvm11 libmfx1 libmp3lame0 libmpg123-0 libmysofa1 libnorm1
+
+  libnuma1 libogg0 libopenal-data libopenal1 libopenjp2-7 libopenmpt0 libopus0
+
+  libpango-1.0-0 libpangocairo-1.0-0 libpangoft2-1.0-0 libpciaccess0
+
+  libpgm-5.3-0 libpixman-1-0 libpocketsphinx3 libpostproc55 libpulse0
+
+  librabbitmq4 libraw1394-11 librsvg2-2 librsvg2-common librubberband2
+
+  libsamplerate0 libsdl2-2.0-0 libsensors-config libsensors5 libserd-0-0
+
+  libshine3 libslang2 libsm6 libsnappy1v5 libsndfile1 libsndio7.0 libsodium23
+
+  libsord-0-0 libsoxr0 libspeex1 libsphinxbase3 libsratom-0-0 libsrt1.4-gnutls
+
+  libssh-gcrypt-4 libswresample3 libswscale5 libthai-data libthai0 libtheora0
+
+  libtwolame0 libudfread0 libusb-1.0-0 libva-drm2 libva-x11-2 libva2
+
+  libvdpau-va-gl1 libvdpau1 libvidstab1.1 libvorbis0a libvorbisenc2
+
+  libvorbisfile3 libvpx6 libvulkan1 libwavpack1 libwayland-client0
+
+  libwayland-cursor0 libwayland-egl1 libwayland-server0 libwebpmux3 libwrap0
+
+  libx11-xcb1 libx264-160 libx265-192 libxcb-dri2-0 libxcb-dri3-0 libxcb-glx0
+
+  libxcb-present0 libxcb-randr0 libxcb-render0 libxcb-shape0 libxcb-shm0
+
+  libxcb-sync1 libxcb-xfixes0 libxcursor1 libxdamage1 libxfixes3 libxi6
+
+  libxinerama1 libxkbcommon0 libxrandr2 libxrender1 libxshmfence1 libxss1
+
+  libxv1 libxvidcore4 libxxf86vm1 libz3-4 libzmq5 libzvbi-common libzvbi0
+
+  mesa-va-drivers mesa-vdpau-drivers mesa-vulkan-drivers ocl-icd-libopencl1
+
+  pocketsphinx-en-us va-driver-all vdpau-driver-all x11-common xkb-data
+
+0 upgraded, 177 newly installed, 0 to remove and 0 not upgraded.
+
+Need to get 135 MB of archives.
+
+After this operation, 431 MB of additional disk space will be used.
+
+Get:1 http://deb.debian.org/debian bullseye/main amd64 alsa-topology-conf all 1.2.4-1 [12.8 kB]
+
+Get:2 http://deb.debian.org/debian bullseye/main amd64 libasound2-data all 1.2.4-1.1 [38.2 kB]
+
+Get:3 http://deb.debian.org/debian bullseye/main amd64 libasound2 amd64 1.2.4-1.1 [356 kB]
+
+Get:4 http://deb.debian.org/debian bullseye/main amd64 alsa-ucm-conf all 1.2.4-2 [28.1 kB]
+
+Get:5 http://deb.debian.org/debian-security bullseye-security/main amd64 libaom0 amd64 1.0.0.errata1-3+deb11u2 [1121 kB]
+
+Get:6 http://deb.debian.org/debian bullseye/main amd64 libdrm-common all 2.4.104-1 [14.9 kB]
+
+Get:7 http://deb.debian.org/debian bullseye/main amd64 libdrm2 amd64 2.4.104-1 [41.5 kB]
+
+Get:8 http://deb.debian.org/debian bullseye/main amd64 libva2 amd64 2.10.0-1 [68.7 kB]
+
+Get:9 http://deb.debian.org/debian bullseye/main amd64 libmfx1 amd64 21.1.0-1 [3289 kB]
+
+Get:10 http://deb.debian.org/debian bullseye/main amd64 libva-drm2 amd64 2.10.0-1 [19.0 kB]
+
+Get:11 http://deb.debian.org/debian bullseye/main amd64 libxfixes3 amd64 1:5.0.3-2 [22.1 kB]
+
+Get:12 http://deb.debian.org/debian bullseye/main amd64 libva-x11-2 amd64 2.10.0-1 [24.0 kB]
+
+Get:13 http://deb.debian.org/debian bullseye/main amd64 libvdpau1 amd64 1.4-3 [29.4 kB]
+
+Get:14 http://deb.debian.org/debian bullseye/main amd64 ocl-icd-libopencl1 amd64 2.2.14-2 [42.5 kB]
+
+Get:15 http://deb.debian.org/debian-security bullseye-security/main amd64 libavutil56 amd64 7:4.3.8-0+deb11u3 [317 kB]
+
+Get:16 http://deb.debian.org/debian bullseye/main amd64 libpixman-1-0 amd64 0.40.0-1.1~deb11u1 [543 kB]
+
+Get:17 http://deb.debian.org/debian bullseye/main amd64 libxcb-render0 amd64 1.14-3 [111 kB]
+
+Get:18 http://deb.debian.org/debian bullseye/main amd64 libxcb-shm0 amd64 1.14-3 [101 kB]
+
+Get:19 http://deb.debian.org/debian bullseye/main amd64 libxrender1 amd64 1:0.9.10-1 [33.0 kB]
+
+Get:20 http://deb.debian.org/debian bullseye/main amd64 libcairo2 amd64 1.16.0-5 [694 kB]
+
+Get:21 http://deb.debian.org/debian bullseye/main amd64 libcodec2-0.9 amd64 0.9.2-4 [7890 kB]
+
+Get:22 http://deb.debian.org/debian bullseye/main amd64 libdav1d4 amd64 0.7.1-3+deb11u1 [331 kB]
+
+Get:23 http://deb.debian.org/debian bullseye/main amd64 libgsm1 amd64 1.0.18-2 [27.7 kB]
+
+Get:24 http://deb.debian.org/debian bullseye/main amd64 libmp3lame0 amd64 3.100-3 [364 kB]
+
+Get:25 http://deb.debian.org/debian bullseye/main amd64 libopenjp2-7 amd64 2.4.0-3 [172 kB]
+
+Get:26 http://deb.debian.org/debian bullseye/main amd64 libopus0 amd64 1.3.1-0.1 [190 kB]
+
+Get:27 http://deb.debian.org/debian bullseye/main amd64 libcairo-gobject2 amd64 1.16.0-5 [125 kB]
+
+Get:28 http://deb.debian.org/debian bullseye/main amd64 libgdk-pixbuf2.0-common all 2.42.2+dfsg-1+deb11u2 [320 kB]
+
+Get:29 http://deb.debian.org/debian bullseye/main amd64 libgdk-pixbuf-2.0-0 amd64 2.42.2+dfsg-1+deb11u2 [147 kB]
+
+Get:30 http://deb.debian.org/debian bullseye/main amd64 fontconfig amd64 2.13.1-4.2 [417 kB]
+
+Get:31 http://deb.debian.org/debian bullseye/main amd64 libfribidi0 amd64 1.0.8-2+deb11u1 [64.9 kB]
+
+Get:32 http://deb.debian.org/debian bullseye/main amd64 libgraphite2-3 amd64 1.3.14-1 [81.2 kB]
+
+Get:33 http://deb.debian.org/debian bullseye/main amd64 libharfbuzz0b amd64 2.7.4-1 [1471 kB]
+
+Get:34 http://deb.debian.org/debian bullseye/main amd64 libthai-data all 0.1.28-3 [170 kB]
+
+Get:35 http://deb.debian.org/debian bullseye/main amd64 libdatrie1 amd64 0.2.13-1 [42.7 kB]
+
+Get:36 http://deb.debian.org/debian bullseye/main amd64 libthai0 amd64 0.1.28-3 [54.2 kB]
+
+Get:37 http://deb.debian.org/debian bullseye/main amd64 libpango-1.0-0 amd64 1.46.2-3 [191 kB]
+
+Get:38 http://deb.debian.org/debian bullseye/main amd64 libpangoft2-1.0-0 amd64 1.46.2-3 [62.2 kB]
+
+Get:39 http://deb.debian.org/debian bullseye/main amd64 libpangocairo-1.0-0 amd64 1.46.2-3 [50.6 kB]
+
+Get:40 http://deb.debian.org/debian bullseye/main amd64 librsvg2-2 amd64 2.50.3+dfsg-1+deb11u1 [2462 kB]
+
+Get:41 http://deb.debian.org/debian bullseye/main amd64 libshine3 amd64 3.1.1-2 [23.6 kB]
+
+Get:42 http://deb.debian.org/debian bullseye/main amd64 libsnappy1v5 amd64 1.1.8-1 [17.9 kB]
+
+Get:43 http://deb.debian.org/debian bullseye/main amd64 libspeex1 amd64 1.2~rc1.2-1.1 [55.4 kB]
+
+Get:44 http://deb.debian.org/debian bullseye/main amd64 libsoxr0 amd64 0.1.3-4 [77.8 kB]
+
+Get:45 http://deb.debian.org/debian-security bullseye-security/main amd64 libswresample3 amd64 7:4.3.8-0+deb11u3 [115 kB]
+
+Get:46 http://deb.debian.org/debian bullseye/main amd64 libogg0 amd64 1.3.4-0.1 [27.3 kB]
+
+Get:47 http://deb.debian.org/debian bullseye/main amd64 libtheora0 amd64 1.1.1+dfsg.1-15 [169 kB]
+
+Get:48 http://deb.debian.org/debian bullseye/main amd64 libtwolame0 amd64 0.4.0-2 [51.1 kB]
+
+Get:49 http://deb.debian.org/debian bullseye/main amd64 libvorbis0a amd64 1.3.7-1 [93.0 kB]
+
+Get:50 http://deb.debian.org/debian bullseye/main amd64 libvorbisenc2 amd64 1.3.7-1 [80.6 kB]
+
+Get:51 http://deb.debian.org/debian bullseye/main amd64 libvpx6 amd64 1.9.0-1+deb11u3 [829 kB]
+
+Get:52 http://deb.debian.org/debian bullseye/main amd64 libwavpack1 amd64 5.4.0-1 [87.8 kB]
+
+Get:53 http://deb.debian.org/debian bullseye/main amd64 libwebpmux3 amd64 0.6.1-2.1+deb11u2 [97.7 kB]
+
+Get:54 http://deb.debian.org/debian bullseye/main amd64 libx264-160 amd64 2:0.160.3011+gitcde9a93-2.1 [539 kB]
+
+Get:55 http://deb.debian.org/debian bullseye/main amd64 libnuma1 amd64 2.0.12-1+b1 [26.3 kB]
+
+Get:56 http://deb.debian.org/debian bullseye/main amd64 libx265-192 amd64 3.4-2 [1095 kB]
+
+Get:57 http://deb.debian.org/debian bullseye/main amd64 libxvidcore4 amd64 2:1.3.7-1 [242 kB]
+
+Get:58 http://deb.debian.org/debian bullseye/main amd64 libzvbi-common all 0.2.35-18 [64.6 kB]
+
+Get:59 http://deb.debian.org/debian bullseye/main amd64 libzvbi0 amd64 0.2.35-18 [271 kB]
+
+Get:60 http://deb.debian.org/debian-security bullseye-security/main amd64 libavcodec58 amd64 7:4.3.8-0+deb11u3 [4970 kB]
+
+Get:61 http://deb.debian.org/debian bullseye/main amd64 libraw1394-11 amd64 2.1.2-2 [41.1 kB]
+
+Get:62 http://deb.debian.org/debian bullseye/main amd64 libavc1394-0 amd64 0.5.4-5 [19.9 kB]
+
+Get:63 http://deb.debian.org/debian bullseye/main amd64 libass9 amd64 1:0.15.0-2 [100.0 kB]
+
+Get:64 http://deb.debian.org/debian bullseye/main amd64 libudfread0 amd64 1.1.1-1 [16.4 kB]
+
+Get:65 http://deb.debian.org/debian bullseye/main amd64 libbluray2 amd64 1:1.2.1-4+deb11u2 [139 kB]
+
+Get:66 http://deb.debian.org/debian bullseye/main amd64 libchromaprint1 amd64 1.5.0-2 [40.8 kB]
+
+Get:67 http://deb.debian.org/debian bullseye/main amd64 libgme0 amd64 0.6.3-2 [128 kB]
+
+Get:68 http://deb.debian.org/debian-security bullseye-security/main amd64 libmpg123-0 amd64 1.26.4-1+deb11u1 [142 kB]
+
+Get:69 http://deb.debian.org/debian bullseye/main amd64 libvorbisfile3 amd64 1.3.7-1 [26.1 kB]
+
+Get:70 http://deb.debian.org/debian bullseye/main amd64 libopenmpt0 amd64 0.4.11-1 [616 kB]
+
+Get:71 http://deb.debian.org/debian bullseye/main amd64 librabbitmq4 amd64 0.10.0-1 [41.0 kB]
+
+Get:72 http://deb.debian.org/debian bullseye/main amd64 libsrt1.4-gnutls amd64 1.4.2-1.3 [271 kB]
+
+Get:73 http://deb.debian.org/debian bullseye/main amd64 libssh-gcrypt-4 amd64 0.9.8-0+deb11u1 [221 kB]
+
+Get:74 http://deb.debian.org/debian bullseye/main amd64 libnorm1 amd64 1.5.9+dfsg-2 [221 kB]
+
+Get:75 http://deb.debian.org/debian bullseye/main amd64 libpgm-5.3-0 amd64 5.3.128~dfsg-2 [161 kB]
+
+Get:76 http://deb.debian.org/debian bullseye/main amd64 libsodium23 amd64 1.0.18-1 [161 kB]
+
+Get:77 http://deb.debian.org/debian bullseye/main amd64 libzmq5 amd64 4.3.4-1+deb11u1 [275 kB]
+
+Get:78 http://deb.debian.org/debian-security bullseye-security/main amd64 libavformat58 amd64 7:4.3.8-0+deb11u3 [1062 kB]
+
+Get:79 http://deb.debian.org/debian bullseye/main amd64 libbs2b0 amd64 3.1.0+dfsg-2.2+b1 [12.2 kB]
+
+Get:80 http://deb.debian.org/debian bullseye/main amd64 libflite1 amd64 2.2-2 [12.8 MB]
+
+Get:81 http://deb.debian.org/debian bullseye/main amd64 libserd-0-0 amd64 0.30.10-2 [46.0 kB]
+
+Get:82 http://deb.debian.org/debian bullseye/main amd64 libsord-0-0 amd64 0.16.8-2 [24.2 kB]
+
+Get:83 http://deb.debian.org/debian bullseye/main amd64 libsratom-0-0 amd64 0.6.8-1 [17.9 kB]
+
+Get:84 http://deb.debian.org/debian bullseye/main amd64 liblilv-0-0 amd64 0.24.12-2 [49.2 kB]
+
+Get:85 http://deb.debian.org/debian bullseye/main amd64 libmysofa1 amd64 1.2~dfsg0-1 [1157 kB]
+
+Get:86 http://deb.debian.org/debian bullseye/main amd64 libblas3 amd64 3.9.0-3+deb11u1 [153 kB]
+
+Get:87 http://deb.debian.org/debian bullseye/main amd64 libgfortran5 amd64 10.2.1-6 [727 kB]
+
+Get:88 http://deb.debian.org/debian bullseye/main amd64 liblapack3 amd64 3.9.0-3+deb11u1 [2166 kB]
+
+Get:89 http://deb.debian.org/debian bullseye/main amd64 libasyncns0 amd64 0.8-6+b2 [12.9 kB]
+
+Get:90 http://deb.debian.org/debian bullseye/main amd64 libflac8 amd64 1.3.3-2+deb11u2 [112 kB]
+
+Get:91 http://deb.debian.org/debian bullseye/main amd64 libsndfile1 amd64 1.0.31-2 [188 kB]
+
+Get:92 http://deb.debian.org/debian bullseye/main amd64 libwrap0 amd64 7.6.q-31 [59.0 kB]
+
+Get:93 http://deb.debian.org/debian bullseye/main amd64 libpulse0 amd64 14.2-2 [285 kB]
+
+Get:94 http://deb.debian.org/debian bullseye/main amd64 libsphinxbase3 amd64 0.8+5prealpha+1-12 [120 kB]
+
+Get:95 http://deb.debian.org/debian bullseye/main amd64 libpocketsphinx3 amd64 0.8+5prealpha+1-13 [124 kB]
+
+Get:96 http://deb.debian.org/debian-security bullseye-security/main amd64 libpostproc55 amd64 7:4.3.8-0+deb11u3 [112 kB]
+
+Get:97 http://deb.debian.org/debian bullseye/main amd64 libfftw3-double3 amd64 3.3.8-2 [733 kB]
+
+Get:98 http://deb.debian.org/debian bullseye/main amd64 libsamplerate0 amd64 0.2.1+ds0-1 [954 kB]
+
+Get:99 http://deb.debian.org/debian bullseye/main amd64 librubberband2 amd64 1.9.0-1 [86.0 kB]
+
+Get:100 http://deb.debian.org/debian-security bullseye-security/main amd64 libswscale5 amd64 7:4.3.8-0+deb11u3 [216 kB]
+
+Get:101 http://deb.debian.org/debian bullseye/main amd64 libvidstab1.1 amd64 1.1.0-2+b1 [37.8 kB]
+
+Get:102 http://deb.debian.org/debian-security bullseye-security/main amd64 libavfilter7 amd64 7:4.3.8-0+deb11u3 [1305 kB]
+
+Get:103 http://deb.debian.org/debian bullseye/main amd64 libslang2 amd64 2.3.2-5 [509 kB]
+
+Get:104 http://deb.debian.org/debian bullseye/main amd64 libcaca0 amd64 0.99.beta19-2.2 [348 kB]
+
+Get:105 http://deb.debian.org/debian bullseye/main amd64 libcdio19 amd64 2.1.0-2 [204 kB]
+
+Get:106 http://deb.debian.org/debian bullseye/main amd64 libcdio-cdda2 amd64 10.2+2.0.0-1+b2 [20.7 kB]
+
+Get:107 http://deb.debian.org/debian bullseye/main amd64 libcdio-paranoia2 amd64 10.2+2.0.0-1+b2 [20.5 kB]
+
+Get:108 http://deb.debian.org/debian bullseye/main amd64 libusb-1.0-0 amd64 2:1.0.24-3 [60.2 kB]
+
+Get:109 http://deb.debian.org/debian bullseye/main amd64 libdc1394-25 amd64 2.2.6-3 [108 kB]
+
+Get:110 http://deb.debian.org/debian bullseye/main amd64 libglvnd0 amd64 1.3.2-1 [53.6 kB]
+
+Get:111 http://deb.debian.org/debian bullseye/main amd64 libglapi-mesa amd64 20.3.5-1 [71.7 kB]
+
+Get:112 http://deb.debian.org/debian bullseye/main amd64 libx11-xcb1 amd64 2:1.7.2-1+deb11u2 [204 kB]
+
+Get:113 http://deb.debian.org/debian bullseye/main amd64 libxcb-dri2-0 amd64 1.14-3 [103 kB]
+
+Get:114 http://deb.debian.org/debian bullseye/main amd64 libxcb-dri3-0 amd64 1.14-3 [102 kB]
+
+Get:115 http://deb.debian.org/debian bullseye/main amd64 libxcb-glx0 amd64 1.14-3 [118 kB]
+
+Get:116 http://deb.debian.org/debian bullseye/main amd64 libxcb-present0 amd64 1.14-3 [101 kB]
+
+Get:117 http://deb.debian.org/debian bullseye/main amd64 libxcb-sync1 amd64 1.14-3 [105 kB]
+
+Get:118 http://deb.debian.org/debian bullseye/main amd64 libxcb-xfixes0 amd64 1.14-3 [105 kB]
+
+Get:119 http://deb.debian.org/debian bullseye/main amd64 libxdamage1 amd64 1:1.1.5-2 [15.7 kB]
+
+Get:120 http://deb.debian.org/debian bullseye/main amd64 libxshmfence1 amd64 1.3-1 [8820 B]
+
+Get:121 http://deb.debian.org/debian bullseye/main amd64 libxxf86vm1 amd64 1:1.1.4-1+b2 [20.8 kB]
+
+Get:122 http://deb.debian.org/debian bullseye/main amd64 libdrm-amdgpu1 amd64 2.4.104-1 [28.5 kB]
+
+Get:123 http://deb.debian.org/debian bullseye/main amd64 libpciaccess0 amd64 0.16-1 [53.6 kB]
+
+Get:124 http://deb.debian.org/debian bullseye/main amd64 libdrm-intel1 amd64 2.4.104-1 [71.8 kB]
+
+Get:125 http://deb.debian.org/debian bullseye/main amd64 libdrm-nouveau2 amd64 2.4.104-1 [26.8 kB]
+
+Get:126 http://deb.debian.org/debian bullseye/main amd64 libdrm-radeon1 amd64 2.4.104-1 [30.2 kB]
+
+Get:127 http://deb.debian.org/debian bullseye/main amd64 libz3-4 amd64 4.8.10-1 [6949 kB]
+
+Get:128 http://deb.debian.org/debian bullseye/main amd64 libllvm11 amd64 1:11.0.1-2 [17.9 MB]
+
+Get:129 http://deb.debian.org/debian bullseye/main amd64 libsensors-config all 1:3.6.0-7 [32.3 kB]
+
+Get:130 http://deb.debian.org/debian bullseye/main amd64 libsensors5 amd64 1:3.6.0-7 [52.3 kB]
+
+Get:131 http://deb.debian.org/debian bullseye/main amd64 libvulkan1 amd64 1.2.162.0-1 [103 kB]
+
+Get:132 http://deb.debian.org/debian bullseye/main amd64 libgl1-mesa-dri amd64 20.3.5-1 [9633 kB]
+
+Get:133 http://deb.debian.org/debian bullseye/main amd64 libglx-mesa0 amd64 20.3.5-1 [186 kB]
+
+Get:134 http://deb.debian.org/debian bullseye/main amd64 libglx0 amd64 1.3.2-1 [35.7 kB]
+
+Get:135 http://deb.debian.org/debian bullseye/main amd64 libgl1 amd64 1.3.2-1 [89.5 kB]
+
+Get:136 http://deb.debian.org/debian bullseye/main amd64 libiec61883-0 amd64 1.2.0-4 [31.4 kB]
+
+Get:137 http://deb.debian.org/debian bullseye/main amd64 libjack-jackd2-0 amd64 1.9.17~dfsg-1 [289 kB]
+
+Get:138 http://deb.debian.org/debian bullseye/main amd64 libopenal-data all 1:1.19.1-2 [170 kB]
+
+Get:139 http://deb.debian.org/debian bullseye/main amd64 libsndio7.0 amd64 1.5.0-3 [24.7 kB]
+
+Get:140 http://deb.debian.org/debian bullseye/main amd64 libopenal1 amd64 1:1.19.1-2 [501 kB]
+
+Get:141 http://deb.debian.org/debian bullseye/main amd64 libwayland-server0 amd64 1.18.0-2~exp1.1 [34.4 kB]
+
+Get:142 http://deb.debian.org/debian bullseye/main amd64 libgbm1 amd64 20.3.5-1 [73.5 kB]
+
+Get:143 http://deb.debian.org/debian bullseye/main amd64 libwayland-client0 amd64 1.18.0-2~exp1.1 [26.9 kB]
+
+Get:144 http://deb.debian.org/debian bullseye/main amd64 libwayland-cursor0 amd64 1.18.0-2~exp1.1 [14.6 kB]
+
+Get:145 http://deb.debian.org/debian bullseye/main amd64 libwayland-egl1 amd64 1.18.0-2~exp1.1 [8448 B]
+
+Get:146 http://deb.debian.org/debian bullseye/main amd64 libxcursor1 amd64 1:1.2.0-2 [37.3 kB]
+
+Get:147 http://deb.debian.org/debian bullseye/main amd64 libxi6 amd64 2:1.7.10-1 [83.4 kB]
+
+Get:148 http://deb.debian.org/debian bullseye/main amd64 libxinerama1 amd64 2:1.1.4-2 [17.7 kB]
+
+Get:149 http://deb.debian.org/debian bullseye/main amd64 xkb-data all 2.29-2 [655 kB]
+
+Get:150 http://deb.debian.org/debian bullseye/main amd64 libxkbcommon0 amd64 1.0.3-2 [101 kB]
+
+Get:151 http://deb.debian.org/debian bullseye/main amd64 libxrandr2 amd64 2:1.5.1-1 [37.5 kB]
+
+Get:152 http://deb.debian.org/debian bullseye/main amd64 x11-common all 1:7.7+22 [252 kB]
+
+Get:153 http://deb.debian.org/debian bullseye/main amd64 libxss1 amd64 1:1.2.3-1 [17.8 kB]
+
+Get:154 http://deb.debian.org/debian bullseye/main amd64 libsdl2-2.0-0 amd64 2.0.14+dfsg2-3+deb11u1 [506 kB]
+
+Get:155 http://deb.debian.org/debian bullseye/main amd64 libxcb-shape0 amd64 1.14-3 [102 kB]
+
+Get:156 http://deb.debian.org/debian bullseye/main amd64 libxv1 amd64 2:1.0.11-1 [24.6 kB]
+
+Get:157 http://deb.debian.org/debian-security bullseye-security/main amd64 libavdevice58 amd64 7:4.3.8-0+deb11u3 [132 kB]
+
+Get:158 http://deb.debian.org/debian-security bullseye-security/main amd64 libavresample4 amd64 7:4.3.8-0+deb11u3 [111 kB]
+
+Get:159 http://deb.debian.org/debian-security bullseye-security/main amd64 ffmpeg amd64 7:4.3.8-0+deb11u3 [1603 kB]
+
+Get:160 http://deb.debian.org/debian bullseye/main amd64 i965-va-driver amd64 2.4.1+dfsg1-1 [309 kB]
+
+Get:161 http://deb.debian.org/debian bullseye/main amd64 libigdgmm11 amd64 20.4.1+ds1-1 [112 kB]
+
+Get:162 http://deb.debian.org/debian bullseye/main amd64 intel-media-va-driver amd64 21.1.1+dfsg1-1 [1915 kB]
+
+Get:163 http://deb.debian.org/debian bullseye/main amd64 libaacs0 amd64 0.9.0-2 [52.4 kB]
+
+Get:164 http://deb.debian.org/debian bullseye/main amd64 libbdplus0 amd64 0.1.2-3 [47.5 kB]
+
+Get:165 http://deb.debian.org/debian bullseye/main amd64 libgdk-pixbuf2.0-bin amd64 2.42.2+dfsg-1+deb11u2 [25.9 kB]
+
+Get:166 http://deb.debian.org/debian bullseye/main amd64 libgl1-mesa-glx amd64 20.3.5-1 [51.1 kB]
+
+Get:167 http://deb.debian.org/debian bullseye/main amd64 libice6 amd64 2:1.0.10-1 [58.5 kB]
+
+Get:168 http://deb.debian.org/debian bullseye/main amd64 librsvg2-common amd64 2.50.3+dfsg-1+deb11u1 [31.2 kB]
+
+Get:169 http://deb.debian.org/debian bullseye/main amd64 libsm6 amd64 2:1.2.3-1 [35.1 kB]
+
+Get:170 http://deb.debian.org/debian bullseye/main amd64 libvdpau-va-gl1 amd64 0.4.2-1+b1 [71.3 kB]
+
+Get:171 http://deb.debian.org/debian bullseye/main amd64 libxcb-randr0 amd64 1.14-3 [113 kB]
+
+Get:172 http://deb.debian.org/debian bullseye/main amd64 mesa-va-drivers amd64 20.3.5-1 [2623 kB]
+
+Get:173 http://deb.debian.org/debian bullseye/main amd64 mesa-vdpau-drivers amd64 20.3.5-1 [2744 kB]
+
+Get:174 http://deb.debian.org/debian bullseye/main amd64 mesa-vulkan-drivers amd64 20.3.5-1 [4086 kB]
+
+Get:175 http://deb.debian.org/debian bullseye/main amd64 pocketsphinx-en-us all 0.8+5prealpha+1-13 [24.3 MB]
+
+Get:176 http://deb.debian.org/debian bullseye/main amd64 va-driver-all amd64 2.10.0-1 [15.3 kB]
+
+Get:177 http://deb.debian.org/debian bullseye/main amd64 vdpau-driver-all amd64 1.4-3 [8540 B]
+
+debconf: delaying package configuration, since apt-utils is not installed
+
+Fetched 135 MB in 1s (95.5 MB/s)
+
+Selecting previously unselected package alsa-topology-conf.
+
+(Reading database ... 22036 files and directories currently installed.)
+
+Preparing to unpack .../000-alsa-topology-conf_1.2.4-1_all.deb ...
+
+Unpacking alsa-topology-conf (1.2.4-1) ...
+
+Selecting previously unselected package libasound2-data.
+
+Preparing to unpack .../001-libasound2-data_1.2.4-1.1_all.deb ...
+
+Unpacking libasound2-data (1.2.4-1.1) ...
+
+Selecting previously unselected package libasound2:amd64.
+
+Preparing to unpack .../002-libasound2_1.2.4-1.1_amd64.deb ...
+
+Unpacking libasound2:amd64 (1.2.4-1.1) ...
+
+Selecting previously unselected package alsa-ucm-conf.
+
+Preparing to unpack .../003-alsa-ucm-conf_1.2.4-2_all.deb ...
+
+Unpacking alsa-ucm-conf (1.2.4-2) ...
+
+Selecting previously unselected package libaom0:amd64.
+
+Preparing to unpack .../004-libaom0_1.0.0.errata1-3+deb11u2_amd64.deb ...
+
+Unpacking libaom0:amd64 (1.0.0.errata1-3+deb11u2) ...
+
+Selecting previously unselected package libdrm-common.
+
+Preparing to unpack .../005-libdrm-common_2.4.104-1_all.deb ...
+
+Unpacking libdrm-common (2.4.104-1) ...
+
+Selecting previously unselected package libdrm2:amd64.
+
+Preparing to unpack .../006-libdrm2_2.4.104-1_amd64.deb ...
+
+Unpacking libdrm2:amd64 (2.4.104-1) ...
+
+Selecting previously unselected package libva2:amd64.
+
+Preparing to unpack .../007-libva2_2.10.0-1_amd64.deb ...
+
+Unpacking libva2:amd64 (2.10.0-1) ...
+
+Selecting previously unselected package libmfx1:amd64.
+
+Preparing to unpack .../008-libmfx1_21.1.0-1_amd64.deb ...
+
+Unpacking libmfx1:amd64 (21.1.0-1) ...
+
+Selecting previously unselected package libva-drm2:amd64.
+
+Preparing to unpack .../009-libva-drm2_2.10.0-1_amd64.deb ...
+
+Unpacking libva-drm2:amd64 (2.10.0-1) ...
+
+Selecting previously unselected package libxfixes3:amd64.
+
+Preparing to unpack .../010-libxfixes3_1%3a5.0.3-2_amd64.deb ...
+
+Unpacking libxfixes3:amd64 (1:5.0.3-2) ...
+
+Selecting previously unselected package libva-x11-2:amd64.
+
+Preparing to unpack .../011-libva-x11-2_2.10.0-1_amd64.deb ...
+
+Unpacking libva-x11-2:amd64 (2.10.0-1) ...
+
+Selecting previously unselected package libvdpau1:amd64.
+
+Preparing to unpack .../012-libvdpau1_1.4-3_amd64.deb ...
+
+Unpacking libvdpau1:amd64 (1.4-3) ...
+
+Selecting previously unselected package ocl-icd-libopencl1:amd64.
+
+Preparing to unpack .../013-ocl-icd-libopencl1_2.2.14-2_amd64.deb ...
+
+Unpacking ocl-icd-libopencl1:amd64 (2.2.14-2) ...
+
+Selecting previously unselected package libavutil56:amd64.
+
+Preparing to unpack .../014-libavutil56_7%3a4.3.8-0+deb11u3_amd64.deb ...
+
+Unpacking libavutil56:amd64 (7:4.3.8-0+deb11u3) ...
+
+Selecting previously unselected package libpixman-1-0:amd64.
+
+Preparing to unpack .../015-libpixman-1-0_0.40.0-1.1~deb11u1_amd64.deb ...
+
+Unpacking libpixman-1-0:amd64 (0.40.0-1.1~deb11u1) ...
+
+Selecting previously unselected package libxcb-render0:amd64.
+
+Preparing to unpack .../016-libxcb-render0_1.14-3_amd64.deb ...
+
+Unpacking libxcb-render0:amd64 (1.14-3) ...
+
+Selecting previously unselected package libxcb-shm0:amd64.
+
+Preparing to unpack .../017-libxcb-shm0_1.14-3_amd64.deb ...
+
+Unpacking libxcb-shm0:amd64 (1.14-3) ...
+
+Selecting previously unselected package libxrender1:amd64.
+
+Preparing to unpack .../018-libxrender1_1%3a0.9.10-1_amd64.deb ...
+
+Unpacking libxrender1:amd64 (1:0.9.10-1) ...
+
+Selecting previously unselected package libcairo2:amd64.
+
+Preparing to unpack .../019-libcairo2_1.16.0-5_amd64.deb ...
+
+Unpacking libcairo2:amd64 (1.16.0-5) ...
+
+Selecting previously unselected package libcodec2-0.9:amd64.
+
+Preparing to unpack .../020-libcodec2-0.9_0.9.2-4_amd64.deb ...
+
+Unpacking libcodec2-0.9:amd64 (0.9.2-4) ...
+
+Selecting previously unselected package libdav1d4:amd64.
+
+Preparing to unpack .../021-libdav1d4_0.7.1-3+deb11u1_amd64.deb ...
+
+Unpacking libdav1d4:amd64 (0.7.1-3+deb11u1) ...
+
+Selecting previously unselected package libgsm1:amd64.
+
+Preparing to unpack .../022-libgsm1_1.0.18-2_amd64.deb ...
+
+Unpacking libgsm1:amd64 (1.0.18-2) ...
+
+Selecting previously unselected package libmp3lame0:amd64.
+
+Preparing to unpack .../023-libmp3lame0_3.100-3_amd64.deb ...
+
+Unpacking libmp3lame0:amd64 (3.100-3) ...
+
+Selecting previously unselected package libopenjp2-7:amd64.
+
+Preparing to unpack .../024-libopenjp2-7_2.4.0-3_amd64.deb ...
+
+Unpacking libopenjp2-7:amd64 (2.4.0-3) ...
+
+Selecting previously unselected package libopus0:amd64.
+
+Preparing to unpack .../025-libopus0_1.3.1-0.1_amd64.deb ...
+
+Unpacking libopus0:amd64 (1.3.1-0.1) ...
+
+Selecting previously unselected package libcairo-gobject2:amd64.
+
+Preparing to unpack .../026-libcairo-gobject2_1.16.0-5_amd64.deb ...
+
+Unpacking libcairo-gobject2:amd64 (1.16.0-5) ...
+
+Selecting previously unselected package libgdk-pixbuf2.0-common.
+
+Preparing to unpack .../027-libgdk-pixbuf2.0-common_2.42.2+dfsg-1+deb11u2_all.deb ...
+
+Unpacking libgdk-pixbuf2.0-common (2.42.2+dfsg-1+deb11u2) ...
+
+Selecting previously unselected package libgdk-pixbuf-2.0-0:amd64.
+
+Preparing to unpack .../028-libgdk-pixbuf-2.0-0_2.42.2+dfsg-1+deb11u2_amd64.deb ...
+
+Unpacking libgdk-pixbuf-2.0-0:amd64 (2.42.2+dfsg-1+deb11u2) ...
+
+Selecting previously unselected package fontconfig.
+
+Preparing to unpack .../029-fontconfig_2.13.1-4.2_amd64.deb ...
+
+Unpacking fontconfig (2.13.1-4.2) ...
+
+Selecting previously unselected package libfribidi0:amd64.
+
+Preparing to unpack .../030-libfribidi0_1.0.8-2+deb11u1_amd64.deb ...
+
+Unpacking libfribidi0:amd64 (1.0.8-2+deb11u1) ...
+
+Selecting previously unselected package libgraphite2-3:amd64.
+
+Preparing to unpack .../031-libgraphite2-3_1.3.14-1_amd64.deb ...
+
+Unpacking libgraphite2-3:amd64 (1.3.14-1) ...
+
+Selecting previously unselected package libharfbuzz0b:amd64.
+
+Preparing to unpack .../032-libharfbuzz0b_2.7.4-1_amd64.deb ...
+
+Unpacking libharfbuzz0b:amd64 (2.7.4-1) ...
+
+Selecting previously unselected package libthai-data.
+
+Preparing to unpack .../033-libthai-data_0.1.28-3_all.deb ...
+
+Unpacking libthai-data (0.1.28-3) ...
+
+Selecting previously unselected package libdatrie1:amd64.
+
+Preparing to unpack .../034-libdatrie1_0.2.13-1_amd64.deb ...
+
+Unpacking libdatrie1:amd64 (0.2.13-1) ...
+
+Selecting previously unselected package libthai0:amd64.
+
+Preparing to unpack .../035-libthai0_0.1.28-3_amd64.deb ...
+
+Unpacking libthai0:amd64 (0.1.28-3) ...
+
+Selecting previously unselected package libpango-1.0-0:amd64.
+
+Preparing to unpack .../036-libpango-1.0-0_1.46.2-3_amd64.deb ...
+
+Unpacking libpango-1.0-0:amd64 (1.46.2-3) ...
+
+Selecting previously unselected package libpangoft2-1.0-0:amd64.
+
+Preparing to unpack .../037-libpangoft2-1.0-0_1.46.2-3_amd64.deb ...
+
+Unpacking libpangoft2-1.0-0:amd64 (1.46.2-3) ...
+
+Selecting previously unselected package libpangocairo-1.0-0:amd64.
+
+Preparing to unpack .../038-libpangocairo-1.0-0_1.46.2-3_amd64.deb ...
+
+Unpacking libpangocairo-1.0-0:amd64 (1.46.2-3) ...
+
+Selecting previously unselected package librsvg2-2:amd64.
+
+Preparing to unpack .../039-librsvg2-2_2.50.3+dfsg-1+deb11u1_amd64.deb ...
+
+Unpacking librsvg2-2:amd64 (2.50.3+dfsg-1+deb11u1) ...
+
+Selecting previously unselected package libshine3:amd64.
+
+Preparing to unpack .../040-libshine3_3.1.1-2_amd64.deb ...
+
+Unpacking libshine3:amd64 (3.1.1-2) ...
+
+Selecting previously unselected package libsnappy1v5:amd64.
+
+Preparing to unpack .../041-libsnappy1v5_1.1.8-1_amd64.deb ...
+
+Unpacking libsnappy1v5:amd64 (1.1.8-1) ...
+
+Selecting previously unselected package libspeex1:amd64.
+
+Preparing to unpack .../042-libspeex1_1.2~rc1.2-1.1_amd64.deb ...
+
+Unpacking libspeex1:amd64 (1.2~rc1.2-1.1) ...
+
+Selecting previously unselected package libsoxr0:amd64.
+
+Preparing to unpack .../043-libsoxr0_0.1.3-4_amd64.deb ...
+
+Unpacking libsoxr0:amd64 (0.1.3-4) ...
+
+Selecting previously unselected package libswresample3:amd64.
+
+Preparing to unpack .../044-libswresample3_7%3a4.3.8-0+deb11u3_amd64.deb ...
+
+Unpacking libswresample3:amd64 (7:4.3.8-0+deb11u3) ...
+
+Selecting previously unselected package libogg0:amd64.
+
+Preparing to unpack .../045-libogg0_1.3.4-0.1_amd64.deb ...
+
+Unpacking libogg0:amd64 (1.3.4-0.1) ...
+
+Selecting previously unselected package libtheora0:amd64.
+
+Preparing to unpack .../046-libtheora0_1.1.1+dfsg.1-15_amd64.deb ...
+
+Unpacking libtheora0:amd64 (1.1.1+dfsg.1-15) ...
+
+Selecting previously unselected package libtwolame0:amd64.
+
+Preparing to unpack .../047-libtwolame0_0.4.0-2_amd64.deb ...
+
+Unpacking libtwolame0:amd64 (0.4.0-2) ...
+
+Selecting previously unselected package libvorbis0a:amd64.
+
+Preparing to unpack .../048-libvorbis0a_1.3.7-1_amd64.deb ...
+
+Unpacking libvorbis0a:amd64 (1.3.7-1) ...
+
+Selecting previously unselected package libvorbisenc2:amd64.
+
+Preparing to unpack .../049-libvorbisenc2_1.3.7-1_amd64.deb ...
+
+Unpacking libvorbisenc2:amd64 (1.3.7-1) ...
+
+Selecting previously unselected package libvpx6:amd64.
+
+Preparing to unpack .../050-libvpx6_1.9.0-1+deb11u3_amd64.deb ...
+
+Unpacking libvpx6:amd64 (1.9.0-1+deb11u3) ...
+
+Selecting previously unselected package libwavpack1:amd64.
+
+Preparing to unpack .../051-libwavpack1_5.4.0-1_amd64.deb ...
+
+Unpacking libwavpack1:amd64 (5.4.0-1) ...
+
+Selecting previously unselected package libwebpmux3:amd64.
+
+Preparing to unpack .../052-libwebpmux3_0.6.1-2.1+deb11u2_amd64.deb ...
+
+Unpacking libwebpmux3:amd64 (0.6.1-2.1+deb11u2) ...
+
+Selecting previously unselected package libx264-160:amd64.
+
+Preparing to unpack .../053-libx264-160_2%3a0.160.3011+gitcde9a93-2.1_amd64.deb ...
+
+Unpacking libx264-160:amd64 (2:0.160.3011+gitcde9a93-2.1) ...
+
+Selecting previously unselected package libnuma1:amd64.
+
+Preparing to unpack .../054-libnuma1_2.0.12-1+b1_amd64.deb ...
+
+Unpacking libnuma1:amd64 (2.0.12-1+b1) ...
+
+Selecting previously unselected package libx265-192:amd64.
+
+Preparing to unpack .../055-libx265-192_3.4-2_amd64.deb ...
+
+Unpacking libx265-192:amd64 (3.4-2) ...
+
+Selecting previously unselected package libxvidcore4:amd64.
+
+Preparing to unpack .../056-libxvidcore4_2%3a1.3.7-1_amd64.deb ...
+
+Unpacking libxvidcore4:amd64 (2:1.3.7-1) ...
+
+Selecting previously unselected package libzvbi-common.
+
+Preparing to unpack .../057-libzvbi-common_0.2.35-18_all.deb ...
+
+Unpacking libzvbi-common (0.2.35-18) ...
+
+Selecting previously unselected package libzvbi0:amd64.
+
+Preparing to unpack .../058-libzvbi0_0.2.35-18_amd64.deb ...
+
+Unpacking libzvbi0:amd64 (0.2.35-18) ...
+
+Selecting previously unselected package libavcodec58:amd64.
+
+Preparing to unpack .../059-libavcodec58_7%3a4.3.8-0+deb11u3_amd64.deb ...
+
+Unpacking libavcodec58:amd64 (7:4.3.8-0+deb11u3) ...
+
+Selecting previously unselected package libraw1394-11:amd64.
+
+Preparing to unpack .../060-libraw1394-11_2.1.2-2_amd64.deb ...
+
+Unpacking libraw1394-11:amd64 (2.1.2-2) ...
+
+Selecting previously unselected package libavc1394-0:amd64.
+
+Preparing to unpack .../061-libavc1394-0_0.5.4-5_amd64.deb ...
+
+Unpacking libavc1394-0:amd64 (0.5.4-5) ...
+
+Selecting previously unselected package libass9:amd64.
+
+Preparing to unpack .../062-libass9_1%3a0.15.0-2_amd64.deb ...
+
+Unpacking libass9:amd64 (1:0.15.0-2) ...
+
+Selecting previously unselected package libudfread0:amd64.
+
+Preparing to unpack .../063-libudfread0_1.1.1-1_amd64.deb ...
+
+Unpacking libudfread0:amd64 (1.1.1-1) ...
+
+Selecting previously unselected package libbluray2:amd64.
+
+Preparing to unpack .../064-libbluray2_1%3a1.2.1-4+deb11u2_amd64.deb ...
+
+Unpacking libbluray2:amd64 (1:1.2.1-4+deb11u2) ...
+
+Selecting previously unselected package libchromaprint1:amd64.
+
+Preparing to unpack .../065-libchromaprint1_1.5.0-2_amd64.deb ...
+
+Unpacking libchromaprint1:amd64 (1.5.0-2) ...
+
+Selecting previously unselected package libgme0:amd64.
+
+Preparing to unpack .../066-libgme0_0.6.3-2_amd64.deb ...
+
+Unpacking libgme0:amd64 (0.6.3-2) ...
+
+Selecting previously unselected package libmpg123-0:amd64.
+
+Preparing to unpack .../067-libmpg123-0_1.26.4-1+deb11u1_amd64.deb ...
+
+Unpacking libmpg123-0:amd64 (1.26.4-1+deb11u1) ...
+
+Selecting previously unselected package libvorbisfile3:amd64.
+
+Preparing to unpack .../068-libvorbisfile3_1.3.7-1_amd64.deb ...
+
+Unpacking libvorbisfile3:amd64 (1.3.7-1) ...
+
+Selecting previously unselected package libopenmpt0:amd64.
+
+Preparing to unpack .../069-libopenmpt0_0.4.11-1_amd64.deb ...
+
+Unpacking libopenmpt0:amd64 (0.4.11-1) ...
+
+Selecting previously unselected package librabbitmq4:amd64.
+
+Preparing to unpack .../070-librabbitmq4_0.10.0-1_amd64.deb ...
+
+Unpacking librabbitmq4:amd64 (0.10.0-1) ...
+
+Selecting previously unselected package libsrt1.4-gnutls:amd64.
+
+Preparing to unpack .../071-libsrt1.4-gnutls_1.4.2-1.3_amd64.deb ...
+
+Unpacking libsrt1.4-gnutls:amd64 (1.4.2-1.3) ...
+
+Selecting previously unselected package libssh-gcrypt-4:amd64.
+
+Preparing to unpack .../072-libssh-gcrypt-4_0.9.8-0+deb11u1_amd64.deb ...
+
+Unpacking libssh-gcrypt-4:amd64 (0.9.8-0+deb11u1) ...
+
+Selecting previously unselected package libnorm1:amd64.
+
+Preparing to unpack .../073-libnorm1_1.5.9+dfsg-2_amd64.deb ...
+
+Unpacking libnorm1:amd64 (1.5.9+dfsg-2) ...
+
+Selecting previously unselected package libpgm-5.3-0:amd64.
+
+Preparing to unpack .../074-libpgm-5.3-0_5.3.128~dfsg-2_amd64.deb ...
+
+Unpacking libpgm-5.3-0:amd64 (5.3.128~dfsg-2) ...
+
+Selecting previously unselected package libsodium23:amd64.
+
+Preparing to unpack .../075-libsodium23_1.0.18-1_amd64.deb ...
+
+Unpacking libsodium23:amd64 (1.0.18-1) ...
+
+Selecting previously unselected package libzmq5:amd64.
+
+Preparing to unpack .../076-libzmq5_4.3.4-1+deb11u1_amd64.deb ...
+
+Unpacking libzmq5:amd64 (4.3.4-1+deb11u1) ...
+
+Selecting previously unselected package libavformat58:amd64.
+
+Preparing to unpack .../077-libavformat58_7%3a4.3.8-0+deb11u3_amd64.deb ...
+
+Unpacking libavformat58:amd64 (7:4.3.8-0+deb11u3) ...
+
+Selecting previously unselected package libbs2b0:amd64.
+
+Preparing to unpack .../078-libbs2b0_3.1.0+dfsg-2.2+b1_amd64.deb ...
+
+Unpacking libbs2b0:amd64 (3.1.0+dfsg-2.2+b1) ...
+
+Selecting previously unselected package libflite1:amd64.
+
+Preparing to unpack .../079-libflite1_2.2-2_amd64.deb ...
+
+Unpacking libflite1:amd64 (2.2-2) ...
+
+Selecting previously unselected package libserd-0-0:amd64.
+
+Preparing to unpack .../080-libserd-0-0_0.30.10-2_amd64.deb ...
+
+Unpacking libserd-0-0:amd64 (0.30.10-2) ...
+
+Selecting previously unselected package libsord-0-0:amd64.
+
+Preparing to unpack .../081-libsord-0-0_0.16.8-2_amd64.deb ...
+
+Unpacking libsord-0-0:amd64 (0.16.8-2) ...
+
+Selecting previously unselected package libsratom-0-0:amd64.
+
+Preparing to unpack .../082-libsratom-0-0_0.6.8-1_amd64.deb ...
+
+Unpacking libsratom-0-0:amd64 (0.6.8-1) ...
+
+Selecting previously unselected package liblilv-0-0:amd64.
+
+Preparing to unpack .../083-liblilv-0-0_0.24.12-2_amd64.deb ...
+
+Unpacking liblilv-0-0:amd64 (0.24.12-2) ...
+
+Selecting previously unselected package libmysofa1:amd64.
+
+Preparing to unpack .../084-libmysofa1_1.2~dfsg0-1_amd64.deb ...
+
+Unpacking libmysofa1:amd64 (1.2~dfsg0-1) ...
+
+Selecting previously unselected package libblas3:amd64.
+
+Preparing to unpack .../085-libblas3_3.9.0-3+deb11u1_amd64.deb ...
+
+Unpacking libblas3:amd64 (3.9.0-3+deb11u1) ...
+
+Selecting previously unselected package libgfortran5:amd64.
+
+Preparing to unpack .../086-libgfortran5_10.2.1-6_amd64.deb ...
+
+Unpacking libgfortran5:amd64 (10.2.1-6) ...
+
+Selecting previously unselected package liblapack3:amd64.
+
+Preparing to unpack .../087-liblapack3_3.9.0-3+deb11u1_amd64.deb ...
+
+Unpacking liblapack3:amd64 (3.9.0-3+deb11u1) ...
+
+Selecting previously unselected package libasyncns0:amd64.
+
+Preparing to unpack .../088-libasyncns0_0.8-6+b2_amd64.deb ...
+
+Unpacking libasyncns0:amd64 (0.8-6+b2) ...
+
+Selecting previously unselected package libflac8:amd64.
+
+Preparing to unpack .../089-libflac8_1.3.3-2+deb11u2_amd64.deb ...
+
+Unpacking libflac8:amd64 (1.3.3-2+deb11u2) ...
+
+Selecting previously unselected package libsndfile1:amd64.
+
+Preparing to unpack .../090-libsndfile1_1.0.31-2_amd64.deb ...
+
+Unpacking libsndfile1:amd64 (1.0.31-2) ...
+
+Selecting previously unselected package libwrap0:amd64.
+
+Preparing to unpack .../091-libwrap0_7.6.q-31_amd64.deb ...
+
+Unpacking libwrap0:amd64 (7.6.q-31) ...
+
+Selecting previously unselected package libpulse0:amd64.
+
+Preparing to unpack .../092-libpulse0_14.2-2_amd64.deb ...
+
+Unpacking libpulse0:amd64 (14.2-2) ...
+
+Selecting previously unselected package libsphinxbase3:amd64.
+
+Preparing to unpack .../093-libsphinxbase3_0.8+5prealpha+1-12_amd64.deb ...
+
+Unpacking libsphinxbase3:amd64 (0.8+5prealpha+1-12) ...
+
+Selecting previously unselected package libpocketsphinx3:amd64.
+
+Preparing to unpack .../094-libpocketsphinx3_0.8+5prealpha+1-13_amd64.deb ...
+
+Unpacking libpocketsphinx3:amd64 (0.8+5prealpha+1-13) ...
+
+Selecting previously unselected package libpostproc55:amd64.
+
+Preparing to unpack .../095-libpostproc55_7%3a4.3.8-0+deb11u3_amd64.deb ...
+
+Unpacking libpostproc55:amd64 (7:4.3.8-0+deb11u3) ...
+
+Selecting previously unselected package libfftw3-double3:amd64.
+
+Preparing to unpack .../096-libfftw3-double3_3.3.8-2_amd64.deb ...
+
+Unpacking libfftw3-double3:amd64 (3.3.8-2) ...
+
+Selecting previously unselected package libsamplerate0:amd64.
+
+Preparing to unpack .../097-libsamplerate0_0.2.1+ds0-1_amd64.deb ...
+
+Unpacking libsamplerate0:amd64 (0.2.1+ds0-1) ...
+
+Selecting previously unselected package librubberband2:amd64.
+
+Preparing to unpack .../098-librubberband2_1.9.0-1_amd64.deb ...
+
+Unpacking librubberband2:amd64 (1.9.0-1) ...
+
+Selecting previously unselected package libswscale5:amd64.
+
+Preparing to unpack .../099-libswscale5_7%3a4.3.8-0+deb11u3_amd64.deb ...
+
+Unpacking libswscale5:amd64 (7:4.3.8-0+deb11u3) ...
+
+Selecting previously unselected package libvidstab1.1:amd64.
+
+Preparing to unpack .../100-libvidstab1.1_1.1.0-2+b1_amd64.deb ...
+
+Unpacking libvidstab1.1:amd64 (1.1.0-2+b1) ...
+
+Selecting previously unselected package libavfilter7:amd64.
+
+Preparing to unpack .../101-libavfilter7_7%3a4.3.8-0+deb11u3_amd64.deb ...
+
+Unpacking libavfilter7:amd64 (7:4.3.8-0+deb11u3) ...
+
+Selecting previously unselected package libslang2:amd64.
+
+Preparing to unpack .../102-libslang2_2.3.2-5_amd64.deb ...
+
+Unpacking libslang2:amd64 (2.3.2-5) ...
+
+Selecting previously unselected package libcaca0:amd64.
+
+Preparing to unpack .../103-libcaca0_0.99.beta19-2.2_amd64.deb ...
+
+Unpacking libcaca0:amd64 (0.99.beta19-2.2) ...
+
+Selecting previously unselected package libcdio19:amd64.
+
+Preparing to unpack .../104-libcdio19_2.1.0-2_amd64.deb ...
+
+Unpacking libcdio19:amd64 (2.1.0-2) ...
+
+Selecting previously unselected package libcdio-cdda2:amd64.
+
+Preparing to unpack .../105-libcdio-cdda2_10.2+2.0.0-1+b2_amd64.deb ...
+
+Unpacking libcdio-cdda2:amd64 (10.2+2.0.0-1+b2) ...
+
+Selecting previously unselected package libcdio-paranoia2:amd64.
+
+Preparing to unpack .../106-libcdio-paranoia2_10.2+2.0.0-1+b2_amd64.deb ...
+
+Unpacking libcdio-paranoia2:amd64 (10.2+2.0.0-1+b2) ...
+
+Selecting previously unselected package libusb-1.0-0:amd64.
+
+Preparing to unpack .../107-libusb-1.0-0_2%3a1.0.24-3_amd64.deb ...
+
+Unpacking libusb-1.0-0:amd64 (2:1.0.24-3) ...
+
+Selecting previously unselected package libdc1394-25:amd64.
+
+Preparing to unpack .../108-libdc1394-25_2.2.6-3_amd64.deb ...
+
+Unpacking libdc1394-25:amd64 (2.2.6-3) ...
+
+Selecting previously unselected package libglvnd0:amd64.
+
+Preparing to unpack .../109-libglvnd0_1.3.2-1_amd64.deb ...
+
+Unpacking libglvnd0:amd64 (1.3.2-1) ...
+
+Selecting previously unselected package libglapi-mesa:amd64.
+
+Preparing to unpack .../110-libglapi-mesa_20.3.5-1_amd64.deb ...
+
+Unpacking libglapi-mesa:amd64 (20.3.5-1) ...
+
+Selecting previously unselected package libx11-xcb1:amd64.
+
+Preparing to unpack .../111-libx11-xcb1_2%3a1.7.2-1+deb11u2_amd64.deb ...
+
+Unpacking libx11-xcb1:amd64 (2:1.7.2-1+deb11u2) ...
+
+Selecting previously unselected package libxcb-dri2-0:amd64.
+
+Preparing to unpack .../112-libxcb-dri2-0_1.14-3_amd64.deb ...
+
+Unpacking libxcb-dri2-0:amd64 (1.14-3) ...
+
+Selecting previously unselected package libxcb-dri3-0:amd64.
+
+Preparing to unpack .../113-libxcb-dri3-0_1.14-3_amd64.deb ...
+
+Unpacking libxcb-dri3-0:amd64 (1.14-3) ...
+
+Selecting previously unselected package libxcb-glx0:amd64.
+
+Preparing to unpack .../114-libxcb-glx0_1.14-3_amd64.deb ...
+
+Unpacking libxcb-glx0:amd64 (1.14-3) ...
+
+Selecting previously unselected package libxcb-present0:amd64.
+
+Preparing to unpack .../115-libxcb-present0_1.14-3_amd64.deb ...
+
+Unpacking libxcb-present0:amd64 (1.14-3) ...
+
+Selecting previously unselected package libxcb-sync1:amd64.
+
+Preparing to unpack .../116-libxcb-sync1_1.14-3_amd64.deb ...
+
+Unpacking libxcb-sync1:amd64 (1.14-3) ...
+
+Selecting previously unselected package libxcb-xfixes0:amd64.
+
+Preparing to unpack .../117-libxcb-xfixes0_1.14-3_amd64.deb ...
+
+Unpacking libxcb-xfixes0:amd64 (1.14-3) ...
+
+Selecting previously unselected package libxdamage1:amd64.
+
+Preparing to unpack .../118-libxdamage1_1%3a1.1.5-2_amd64.deb ...
+
+Unpacking libxdamage1:amd64 (1:1.1.5-2) ...
+
+Selecting previously unselected package libxshmfence1:amd64.
+
+Preparing to unpack .../119-libxshmfence1_1.3-1_amd64.deb ...
+
+Unpacking libxshmfence1:amd64 (1.3-1) ...
+
+Selecting previously unselected package libxxf86vm1:amd64.
+
+Preparing to unpack .../120-libxxf86vm1_1%3a1.1.4-1+b2_amd64.deb ...
+
+Unpacking libxxf86vm1:amd64 (1:1.1.4-1+b2) ...
+
+Selecting previously unselected package libdrm-amdgpu1:amd64.
+
+Preparing to unpack .../121-libdrm-amdgpu1_2.4.104-1_amd64.deb ...
+
+Unpacking libdrm-amdgpu1:amd64 (2.4.104-1) ...
+
+Selecting previously unselected package libpciaccess0:amd64.
+
+Preparing to unpack .../122-libpciaccess0_0.16-1_amd64.deb ...
+
+Unpacking libpciaccess0:amd64 (0.16-1) ...
+
+Selecting previously unselected package libdrm-intel1:amd64.
+
+Preparing to unpack .../123-libdrm-intel1_2.4.104-1_amd64.deb ...
+
+Unpacking libdrm-intel1:amd64 (2.4.104-1) ...
+
+Selecting previously unselected package libdrm-nouveau2:amd64.
+
+Preparing to unpack .../124-libdrm-nouveau2_2.4.104-1_amd64.deb ...
+
+Unpacking libdrm-nouveau2:amd64 (2.4.104-1) ...
+
+Selecting previously unselected package libdrm-radeon1:amd64.
+
+Preparing to unpack .../125-libdrm-radeon1_2.4.104-1_amd64.deb ...
+
+Unpacking libdrm-radeon1:amd64 (2.4.104-1) ...
+
+Selecting previously unselected package libz3-4:amd64.
+
+Preparing to unpack .../126-libz3-4_4.8.10-1_amd64.deb ...
+
+Unpacking libz3-4:amd64 (4.8.10-1) ...
+
+Selecting previously unselected package libllvm11:amd64.
+
+Preparing to unpack .../127-libllvm11_1%3a11.0.1-2_amd64.deb ...
+
+Unpacking libllvm11:amd64 (1:11.0.1-2) ...
+
+Selecting previously unselected package libsensors-config.
+
+Preparing to unpack .../128-libsensors-config_1%3a3.6.0-7_all.deb ...
+
+Unpacking libsensors-config (1:3.6.0-7) ...
+
+Selecting previously unselected package libsensors5:amd64.
+
+Preparing to unpack .../129-libsensors5_1%3a3.6.0-7_amd64.deb ...
+
+Unpacking libsensors5:amd64 (1:3.6.0-7) ...
+
+Selecting previously unselected package libvulkan1:amd64.
+
+Preparing to unpack .../130-libvulkan1_1.2.162.0-1_amd64.deb ...
+
+Unpacking libvulkan1:amd64 (1.2.162.0-1) ...
+
+Selecting previously unselected package libgl1-mesa-dri:amd64.
+
+Preparing to unpack .../131-libgl1-mesa-dri_20.3.5-1_amd64.deb ...
+
+Unpacking libgl1-mesa-dri:amd64 (20.3.5-1) ...
+
+Selecting previously unselected package libglx-mesa0:amd64.
+
+Preparing to unpack .../132-libglx-mesa0_20.3.5-1_amd64.deb ...
+
+Unpacking libglx-mesa0:amd64 (20.3.5-1) ...
+
+Selecting previously unselected package libglx0:amd64.
+
+Preparing to unpack .../133-libglx0_1.3.2-1_amd64.deb ...
+
+Unpacking libglx0:amd64 (1.3.2-1) ...
+
+Selecting previously unselected package libgl1:amd64.
+
+Preparing to unpack .../134-libgl1_1.3.2-1_amd64.deb ...
+
+Unpacking libgl1:amd64 (1.3.2-1) ...
+
+Selecting previously unselected package libiec61883-0:amd64.
+
+Preparing to unpack .../135-libiec61883-0_1.2.0-4_amd64.deb ...
+
+Unpacking libiec61883-0:amd64 (1.2.0-4) ...
+
+Selecting previously unselected package libjack-jackd2-0:amd64.
+
+Preparing to unpack .../136-libjack-jackd2-0_1.9.17~dfsg-1_amd64.deb ...
+
+Unpacking libjack-jackd2-0:amd64 (1.9.17~dfsg-1) ...
+
+Selecting previously unselected package libopenal-data.
+
+Preparing to unpack .../137-libopenal-data_1%3a1.19.1-2_all.deb ...
+
+Unpacking libopenal-data (1:1.19.1-2) ...
+
+Selecting previously unselected package libsndio7.0:amd64.
+
+Preparing to unpack .../138-libsndio7.0_1.5.0-3_amd64.deb ...
+
+Unpacking libsndio7.0:amd64 (1.5.0-3) ...
+
+Selecting previously unselected package libopenal1:amd64.
+
+Preparing to unpack .../139-libopenal1_1%3a1.19.1-2_amd64.deb ...
+
+Unpacking libopenal1:amd64 (1:1.19.1-2) ...
+
+Selecting previously unselected package libwayland-server0:amd64.
+
+Preparing to unpack .../140-libwayland-server0_1.18.0-2~exp1.1_amd64.deb ...
+
+Unpacking libwayland-server0:amd64 (1.18.0-2~exp1.1) ...
+
+Selecting previously unselected package libgbm1:amd64.
+
+Preparing to unpack .../141-libgbm1_20.3.5-1_amd64.deb ...
+
+Unpacking libgbm1:amd64 (20.3.5-1) ...
+
+Selecting previously unselected package libwayland-client0:amd64.
+
+Preparing to unpack .../142-libwayland-client0_1.18.0-2~exp1.1_amd64.deb ...
+
+Unpacking libwayland-client0:amd64 (1.18.0-2~exp1.1) ...
+
+Selecting previously unselected package libwayland-cursor0:amd64.
+
+Preparing to unpack .../143-libwayland-cursor0_1.18.0-2~exp1.1_amd64.deb ...
+
+Unpacking libwayland-cursor0:amd64 (1.18.0-2~exp1.1) ...
+
+Selecting previously unselected package libwayland-egl1:amd64.
+
+Preparing to unpack .../144-libwayland-egl1_1.18.0-2~exp1.1_amd64.deb ...
+
+Unpacking libwayland-egl1:amd64 (1.18.0-2~exp1.1) ...
+
+Selecting previously unselected package libxcursor1:amd64.
+
+Preparing to unpack .../145-libxcursor1_1%3a1.2.0-2_amd64.deb ...
+
+Unpacking libxcursor1:amd64 (1:1.2.0-2) ...
+
+Selecting previously unselected package libxi6:amd64.
+
+Preparing to unpack .../146-libxi6_2%3a1.7.10-1_amd64.deb ...
+
+Unpacking libxi6:amd64 (2:1.7.10-1) ...
+
+Selecting previously unselected package libxinerama1:amd64.
+
+Preparing to unpack .../147-libxinerama1_2%3a1.1.4-2_amd64.deb ...
+
+Unpacking libxinerama1:amd64 (2:1.1.4-2) ...
+
+Selecting previously unselected package xkb-data.
+
+Preparing to unpack .../148-xkb-data_2.29-2_all.deb ...
+
+Unpacking xkb-data (2.29-2) ...
+
+Selecting previously unselected package libxkbcommon0:amd64.
+
+Preparing to unpack .../149-libxkbcommon0_1.0.3-2_amd64.deb ...
+
+Unpacking libxkbcommon0:amd64 (1.0.3-2) ...
+
+Selecting previously unselected package libxrandr2:amd64.
+
+Preparing to unpack .../150-libxrandr2_2%3a1.5.1-1_amd64.deb ...
+
+Unpacking libxrandr2:amd64 (2:1.5.1-1) ...
+
+Selecting previously unselected package x11-common.
+
+Preparing to unpack .../151-x11-common_1%3a7.7+22_all.deb ...
+
+Unpacking x11-common (1:7.7+22) ...
+
+Selecting previously unselected package libxss1:amd64.
+
+Preparing to unpack .../152-libxss1_1%3a1.2.3-1_amd64.deb ...
+
+Unpacking libxss1:amd64 (1:1.2.3-1) ...
+
+Selecting previously unselected package libsdl2-2.0-0:amd64.
+
+Preparing to unpack .../153-libsdl2-2.0-0_2.0.14+dfsg2-3+deb11u1_amd64.deb ...
+
+Unpacking libsdl2-2.0-0:amd64 (2.0.14+dfsg2-3+deb11u1) ...
+
+Selecting previously unselected package libxcb-shape0:amd64.
+
+Preparing to unpack .../154-libxcb-shape0_1.14-3_amd64.deb ...
+
+Unpacking libxcb-shape0:amd64 (1.14-3) ...
+
+Selecting previously unselected package libxv1:amd64.
+
+Preparing to unpack .../155-libxv1_2%3a1.0.11-1_amd64.deb ...
+
+Unpacking libxv1:amd64 (2:1.0.11-1) ...
+
+Selecting previously unselected package libavdevice58:amd64.
+
+Preparing to unpack .../156-libavdevice58_7%3a4.3.8-0+deb11u3_amd64.deb ...
+
+Unpacking libavdevice58:amd64 (7:4.3.8-0+deb11u3) ...
+
+Selecting previously unselected package libavresample4:amd64.
+
+Preparing to unpack .../157-libavresample4_7%3a4.3.8-0+deb11u3_amd64.deb ...
+
+Unpacking libavresample4:amd64 (7:4.3.8-0+deb11u3) ...
+
+Selecting previously unselected package ffmpeg.
+
+Preparing to unpack .../158-ffmpeg_7%3a4.3.8-0+deb11u3_amd64.deb ...
+
+Unpacking ffmpeg (7:4.3.8-0+deb11u3) ...
+
+Selecting previously unselected package i965-va-driver:amd64.
+
+Preparing to unpack .../159-i965-va-driver_2.4.1+dfsg1-1_amd64.deb ...
+
+Unpacking i965-va-driver:amd64 (2.4.1+dfsg1-1) ...
+
+Selecting previously unselected package libigdgmm11:amd64.
+
+Preparing to unpack .../160-libigdgmm11_20.4.1+ds1-1_amd64.deb ...
+
+Unpacking libigdgmm11:amd64 (20.4.1+ds1-1) ...
+
+Selecting previously unselected package intel-media-va-driver:amd64.
+
+Preparing to unpack .../161-intel-media-va-driver_21.1.1+dfsg1-1_amd64.deb ...
+
+Unpacking intel-media-va-driver:amd64 (21.1.1+dfsg1-1) ...
+
+Selecting previously unselected package libaacs0:amd64.
+
+Preparing to unpack .../162-libaacs0_0.9.0-2_amd64.deb ...
+
+Unpacking libaacs0:amd64 (0.9.0-2) ...
+
+Selecting previously unselected package libbdplus0:amd64.
+
+Preparing to unpack .../163-libbdplus0_0.1.2-3_amd64.deb ...
+
+Unpacking libbdplus0:amd64 (0.1.2-3) ...
+
+Selecting previously unselected package libgdk-pixbuf2.0-bin.
+
+Preparing to unpack .../164-libgdk-pixbuf2.0-bin_2.42.2+dfsg-1+deb11u2_amd64.deb ...
+
+Unpacking libgdk-pixbuf2.0-bin (2.42.2+dfsg-1+deb11u2) ...
+
+Selecting previously unselected package libgl1-mesa-glx:amd64.
+
+Preparing to unpack .../165-libgl1-mesa-glx_20.3.5-1_amd64.deb ...
+
+Unpacking libgl1-mesa-glx:amd64 (20.3.5-1) ...
+
+Selecting previously unselected package libice6:amd64.
+
+Preparing to unpack .../166-libice6_2%3a1.0.10-1_amd64.deb ...
+
+Unpacking libice6:amd64 (2:1.0.10-1) ...
+
+Selecting previously unselected package librsvg2-common:amd64.
+
+Preparing to unpack .../167-librsvg2-common_2.50.3+dfsg-1+deb11u1_amd64.deb ...
+
+Unpacking librsvg2-common:amd64 (2.50.3+dfsg-1+deb11u1) ...
+
+Selecting previously unselected package libsm6:amd64.
+
+Preparing to unpack .../168-libsm6_2%3a1.2.3-1_amd64.deb ...
+
+Unpacking libsm6:amd64 (2:1.2.3-1) ...
+
+Selecting previously unselected package libvdpau-va-gl1:amd64.
+
+Preparing to unpack .../169-libvdpau-va-gl1_0.4.2-1+b1_amd64.deb ...
+
+Unpacking libvdpau-va-gl1:amd64 (0.4.2-1+b1) ...
+
+Selecting previously unselected package libxcb-randr0:amd64.
+
+Preparing to unpack .../170-libxcb-randr0_1.14-3_amd64.deb ...
+
+Unpacking libxcb-randr0:amd64 (1.14-3) ...
+
+Selecting previously unselected package mesa-va-drivers:amd64.
+
+Preparing to unpack .../171-mesa-va-drivers_20.3.5-1_amd64.deb ...
+
+Unpacking mesa-va-drivers:amd64 (20.3.5-1) ...
+
+Selecting previously unselected package mesa-vdpau-drivers:amd64.
+
+Preparing to unpack .../172-mesa-vdpau-drivers_20.3.5-1_amd64.deb ...
+
+Unpacking mesa-vdpau-drivers:amd64 (20.3.5-1) ...
+
+Selecting previously unselected package mesa-vulkan-drivers:amd64.
+
+Preparing to unpack .../173-mesa-vulkan-drivers_20.3.5-1_amd64.deb ...
+
+Unpacking mesa-vulkan-drivers:amd64 (20.3.5-1) ...
+
+Selecting previously unselected package pocketsphinx-en-us.
+
+Preparing to unpack .../174-pocketsphinx-en-us_0.8+5prealpha+1-13_all.deb ...
+
+Unpacking pocketsphinx-en-us (0.8+5prealpha+1-13) ...
+
+Selecting previously unselected package va-driver-all:amd64.
+
+Preparing to unpack .../175-va-driver-all_2.10.0-1_amd64.deb ...
+
+Unpacking va-driver-all:amd64 (2.10.0-1) ...
+
+Selecting previously unselected package vdpau-driver-all:amd64.
+
+Preparing to unpack .../176-vdpau-driver-all_1.4-3_amd64.deb ...
+
+Unpacking vdpau-driver-all:amd64 (1.4-3) ...
+
+Setting up libgme0:amd64 (0.6.3-2) ...
+
+Setting up libssh-gcrypt-4:amd64 (0.9.8-0+deb11u1) ...
+
+Setting up libgraphite2-3:amd64 (1.3.14-1) ...
+
+Setting up libsrt1.4-gnutls:amd64 (1.4.2-1.3) ...
+
+Setting up libxcb-dri3-0:amd64 (1.14-3) ...
+
+Setting up libpixman-1-0:amd64 (0.40.0-1.1~deb11u1) ...
+
+Setting up libudfread0:amd64 (1.1.1-1) ...
+
+Setting up libwayland-server0:amd64 (1.18.0-2~exp1.1) ...
+
+Setting up libx11-xcb1:amd64 (2:1.7.2-1+deb11u2) ...
+
+Setting up libpciaccess0:amd64 (0.16-1) ...
+
+Setting up fontconfig (2.13.1-4.2) ...
+
+Regenerating fonts cache... [2025-03-07 12:06:59.405740] done.
+
+Setting up librabbitmq4:amd64 (0.10.0-1) ...
+
+Setting up libraw1394-11:amd64 (2.1.2-2) ...
+
+Setting up libsodium23:amd64 (1.0.18-1) ...
+
+Setting up libxdamage1:amd64 (1:1.1.5-2) ...
+
+Setting up libmpg123-0:amd64 (1.26.4-1+deb11u1) ...
+
+Setting up libxcb-xfixes0:amd64 (1.14-3) ...
+
+Setting up libogg0:amd64 (1.3.4-0.1) ...
+
+Setting up libspeex1:amd64 (1.2~rc1.2-1.1) ...
+
+Setting up libshine3:amd64 (3.1.1-2) ...
+
+Setting up libxi6:amd64 (2:1.7.10-1) ...
+
+Setting up libtwolame0:amd64 (0.4.0-2) ...
+
+Setting up libxrender1:amd64 (1:0.9.10-1) ...
+
+Setting up libdatrie1:amd64 (0.2.13-1) ...
+
+Setting up libgsm1:amd64 (1.0.18-2) ...
+
+Setting up libxcb-render0:amd64 (1.14-3) ...
+
+Setting up libsoxr0:amd64 (0.1.3-4) ...
+
+Setting up libglvnd0:amd64 (1.3.2-1) ...
+
+Setting up libpgm-5.3-0:amd64 (5.3.128~dfsg-2) ...
+
+Setting up libxcb-glx0:amd64 (1.14-3) ...
+
+Setting up libaom0:amd64 (1.0.0.errata1-3+deb11u2) ...
+
+Setting up libgdk-pixbuf2.0-common (2.42.2+dfsg-1+deb11u2) ...
+
+Setting up libnorm1:amd64 (1.5.9+dfsg-2) ...
+
+Setting up libmysofa1:amd64 (1.2~dfsg0-1) ...
+
+Setting up libxcb-shape0:amd64 (1.14-3) ...
+
+Setting up x11-common (1:7.7+22) ...
+
+debconf: unable to initialize frontend: Dialog
+
+debconf: (Dialog frontend will not work on a dumb terminal, an emacs shell buffer, or without a controlling terminal.)
+
+debconf: falling back to frontend: Readline
+
+invoke-rc.d: could not determine current runlevel
+
+invoke-rc.d: policy-rc.d denied execution of start.
+
+Setting up libsensors-config (1:3.6.0-7) ...
+
+Setting up xkb-data (2.29-2) ...
+
+Setting up libxcb-shm0:amd64 (1.14-3) ...
+
+Setting up libcdio19:amd64 (2.1.0-2) ...
+
+Setting up libxvidcore4:amd64 (2:1.3.7-1) ...
+
+Setting up libx264-160:amd64 (2:0.160.3011+gitcde9a93-2.1) ...
+
+Setting up libcairo2:amd64 (1.16.0-5) ...
+
+Setting up libxxf86vm1:amd64 (1:1.1.4-1+b2) ...
+
+Setting up libsnappy1v5:amd64 (1.1.8-1) ...
+
+Setting up libflac8:amd64 (1.3.3-2+deb11u2) ...
+
+Setting up libxcb-present0:amd64 (1.14-3) ...
+
+Setting up libasound2-data (1.2.4-1.1) ...
+
+Setting up libz3-4:amd64 (4.8.10-1) ...
+
+Setting up libblas3:amd64 (3.9.0-3+deb11u1) ...
+
+update-alternatives: using /usr/lib/x86_64-linux-gnu/blas/libblas.so.3 to provide /usr/lib/x86_64-linux-gnu/libblas.so.3 (libblas.so.3-x86_64-linux-gnu) in auto mode
+
+Setting up libllvm11:amd64 (1:11.0.1-2) ...
+
+Setting up libslang2:amd64 (2.3.2-5) ...
+
+Setting up libva2:amd64 (2.10.0-1) ...
+
+Setting up libwrap0:amd64 (7.6.q-31) ...
+
+Setting up libigdgmm11:amd64 (20.4.1+ds1-1) ...
+
+Setting up libxfixes3:amd64 (1:5.0.3-2) ...
+
+Setting up libxcb-sync1:amd64 (1.14-3) ...
+
+Setting up libcodec2-0.9:amd64 (0.9.2-4) ...
+
+Setting up libfribidi0:amd64 (1.0.8-2+deb11u1) ...
+
+Setting up libopus0:amd64 (1.3.1-0.1) ...
+
+Setting up libxinerama1:amd64 (2:1.1.4-2) ...
+
+Setting up intel-media-va-driver:amd64 (21.1.1+dfsg1-1) ...
+
+Setting up libxv1:amd64 (2:1.0.11-1) ...
+
+Setting up libvorbis0a:amd64 (1.3.7-1) ...
+
+Setting up libxrandr2:amd64 (2:1.5.1-1) ...
+
+Setting up libsensors5:amd64 (1:3.6.0-7) ...
+
+Setting up libaacs0:amd64 (0.9.0-2) ...
+
+Setting up pocketsphinx-en-us (0.8+5prealpha+1-13) ...
+
+Setting up libfftw3-double3:amd64 (3.3.8-2) ...
+
+Setting up libglapi-mesa:amd64 (20.3.5-1) ...
+
+Setting up libgfortran5:amd64 (10.2.1-6) ...
+
+Setting up libvulkan1:amd64 (1.2.162.0-1) ...
+
+Setting up libxcb-dri2-0:amd64 (1.14-3) ...
+
+Setting up libbdplus0:amd64 (0.1.2-3) ...
+
+Setting up libnuma1:amd64 (2.0.12-1+b1) ...
+
+Setting up libvidstab1.1:amd64 (1.1.0-2+b1) ...
+
+Setting up alsa-topology-conf (1.2.4-1) ...
+
+Setting up ocl-icd-libopencl1:amd64 (2.2.14-2) ...
+
+Setting up libasyncns0:amd64 (0.8-6+b2) ...
+
+Setting up libxshmfence1:amd64 (1.3-1) ...
+
+Setting up libvpx6:amd64 (1.9.0-1+deb11u3) ...
+
+Setting up libvdpau1:amd64 (1.4-3) ...
+
+Setting up libwavpack1:amd64 (5.4.0-1) ...
+
+Setting up libbs2b0:amd64 (3.1.0+dfsg-2.2+b1) ...
+
+Setting up libxcb-randr0:amd64 (1.14-3) ...
+
+Setting up libtheora0:amd64 (1.1.1+dfsg.1-15) ...
+
+Setting up libasound2:amd64 (1.2.4-1.1) ...
+
+Setting up libdav1d4:amd64 (0.7.1-3+deb11u1) ...
+
+Setting up libopenjp2-7:amd64 (2.4.0-3) ...
+
+Setting up libharfbuzz0b:amd64 (2.7.4-1) ...
+
+Setting up libopenal-data (1:1.19.1-2) ...
+
+Setting up libthai-data (0.1.28-3) ...
+
+Setting up libgdk-pixbuf-2.0-0:amd64 (2.42.2+dfsg-1+deb11u2) ...
+
+Setting up libcairo-gobject2:amd64 (1.16.0-5) ...
+
+Setting up libwayland-egl1:amd64 (1.18.0-2~exp1.1) ...
+
+Setting up libxss1:amd64 (1:1.2.3-1) ...
+
+Setting up libusb-1.0-0:amd64 (2:1.0.24-3) ...
+
+Setting up libmfx1:amd64 (21.1.0-1) ...
+
+Setting up libbluray2:amd64 (1:1.2.1-4+deb11u2) ...
+
+Setting up libsamplerate0:amd64 (0.2.1+ds0-1) ...
+
+Setting up libwebpmux3:amd64 (0.6.1-2.1+deb11u2) ...
+
+Setting up libdrm-common (2.4.104-1) ...
+
+Setting up libzvbi-common (0.2.35-18) ...
+
+Setting up libmp3lame0:amd64 (3.100-3) ...
+
+Setting up libvorbisenc2:amd64 (1.3.7-1) ...
+
+Setting up libiec61883-0:amd64 (1.2.0-4) ...
+
+Setting up libserd-0-0:amd64 (0.30.10-2) ...
+
+Setting up libxkbcommon0:amd64 (1.0.3-2) ...
+
+Setting up libwayland-client0:amd64 (1.18.0-2~exp1.1) ...
+
+Setting up libavc1394-0:amd64 (0.5.4-5) ...
+
+Setting up libzvbi0:amd64 (0.2.35-18) ...
+
+Setting up libice6:amd64 (2:1.0.10-1) ...
+
+Setting up liblapack3:amd64 (3.9.0-3+deb11u1) ...
+
+update-alternatives: using /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3 to provide /usr/lib/x86_64-linux-gnu/liblapack.so.3 (liblapack.so.3-x86_64-linux-gnu) in auto mode
+
+Setting up libzmq5:amd64 (4.3.4-1+deb11u1) ...
+
+Setting up libcaca0:amd64 (0.99.beta19-2.2) ...
+
+Setting up alsa-ucm-conf (1.2.4-2) ...
+
+Setting up libcdio-cdda2:amd64 (10.2+2.0.0-1+b2) ...
+
+Setting up libcdio-paranoia2:amd64 (10.2+2.0.0-1+b2) ...
+
+Setting up libxcursor1:amd64 (1:1.2.0-2) ...
+
+Setting up libx265-192:amd64 (3.4-2) ...
+
+Setting up libthai0:amd64 (0.1.28-3) ...
+
+Setting up libvorbisfile3:amd64 (1.3.7-1) ...
+
+Setting up libass9:amd64 (1:0.15.0-2) ...
+
+Setting up libdc1394-25:amd64 (2.2.6-3) ...
+
+Setting up librubberband2:amd64 (1.9.0-1) ...
+
+Setting up libsndio7.0:amd64 (1.5.0-3) ...
+
+Setting up libjack-jackd2-0:amd64 (1.9.17~dfsg-1) ...
+
+Setting up libdrm2:amd64 (2.4.104-1) ...
+
+Setting up libflite1:amd64 (2.2-2) ...
+
+Setting up libva-drm2:amd64 (2.10.0-1) ...
+
+Setting up libgdk-pixbuf2.0-bin (2.42.2+dfsg-1+deb11u2) ...
+
+Setting up libsord-0-0:amd64 (0.16.8-2) ...
+
+Setting up libwayland-cursor0:amd64 (1.18.0-2~exp1.1) ...
+
+Setting up libsratom-0-0:amd64 (0.6.8-1) ...
+
+Setting up libsndfile1:amd64 (1.0.31-2) ...
+
+Setting up libva-x11-2:amd64 (2.10.0-1) ...
+
+Setting up libsm6:amd64 (2:1.2.3-1) ...
+
+Setting up liblilv-0-0:amd64 (0.24.12-2) ...
+
+Setting up libopenmpt0:amd64 (0.4.11-1) ...
+
+Setting up libdrm-amdgpu1:amd64 (2.4.104-1) ...
+
+Setting up mesa-vulkan-drivers:amd64 (20.3.5-1) ...
+
+Setting up libdrm-nouveau2:amd64 (2.4.104-1) ...
+
+Setting up libgbm1:amd64 (20.3.5-1) ...
+
+Setting up libpulse0:amd64 (14.2-2) ...
+
+Setting up libdrm-radeon1:amd64 (2.4.104-1) ...
+
+Setting up libpango-1.0-0:amd64 (1.46.2-3) ...
+
+Setting up libdrm-intel1:amd64 (2.4.104-1) ...
+
+Setting up libgl1-mesa-dri:amd64 (20.3.5-1) ...
+
+Setting up libopenal1:amd64 (1:1.19.1-2) ...
+
+Setting up libavutil56:amd64 (7:4.3.8-0+deb11u3) ...
+
+Setting up libpostproc55:amd64 (7:4.3.8-0+deb11u3) ...
+
+Setting up libswscale5:amd64 (7:4.3.8-0+deb11u3) ...
+
+Setting up mesa-va-drivers:amd64 (20.3.5-1) ...
+
+Setting up libpangoft2-1.0-0:amd64 (1.46.2-3) ...
+
+Setting up libsdl2-2.0-0:amd64 (2.0.14+dfsg2-3+deb11u1) ...
+
+Setting up i965-va-driver:amd64 (2.4.1+dfsg1-1) ...
+
+Setting up libpangocairo-1.0-0:amd64 (1.46.2-3) ...
+
+Setting up mesa-vdpau-drivers:amd64 (20.3.5-1) ...
+
+Setting up libglx-mesa0:amd64 (20.3.5-1) ...
+
+Setting up libglx0:amd64 (1.3.2-1) ...
+
+Setting up libsphinxbase3:amd64 (0.8+5prealpha+1-12) ...
+
+Setting up libswresample3:amd64 (7:4.3.8-0+deb11u3) ...
+
+Setting up libavresample4:amd64 (7:4.3.8-0+deb11u3) ...
+
+Setting up librsvg2-2:amd64 (2.50.3+dfsg-1+deb11u1) ...
+
+Setting up libpocketsphinx3:amd64 (0.8+5prealpha+1-13) ...
+
+Setting up libgl1:amd64 (1.3.2-1) ...
+
+Setting up va-driver-all:amd64 (2.10.0-1) ...
+
+Setting up librsvg2-common:amd64 (2.50.3+dfsg-1+deb11u1) ...
+
+Setting up libgl1-mesa-glx:amd64 (20.3.5-1) ...
+
+Setting up libavcodec58:amd64 (7:4.3.8-0+deb11u3) ...
+
+Setting up libvdpau-va-gl1:amd64 (0.4.2-1+b1) ...
+
+Setting up libchromaprint1:amd64 (1.5.0-2) ...
+
+Setting up libavformat58:amd64 (7:4.3.8-0+deb11u3) ...
+
+Setting up vdpau-driver-all:amd64 (1.4-3) ...
+
+Setting up libavfilter7:amd64 (7:4.3.8-0+deb11u3) ...
+
+Setting up libavdevice58:amd64 (7:4.3.8-0+deb11u3) ...
+
+Setting up ffmpeg (7:4.3.8-0+deb11u3) ...
+
+Processing triggers for libc-bin (2.31-13+deb11u11) ...
+
+Processing triggers for libgdk-pixbuf-2.0-0:amd64 (2.42.2+dfsg-1+deb11u2) ...
+
+
+──────────────────────────────────────── uv ───────────────────────────────────────────
+
+
+Using uv pip install.
+
+Using Python 3.12.9 environment at /home/adminuser/venv
+
+  × No solution found when resolving dependencies:
+
+  ╰─▶ Because there is no version of pytubefix==8.12.3 and you require
+
+      pytubefix==8.12.3, we can conclude that your requirements are
+
+      unsatisfiable.
+
+Checking if Streamlit is installed
+
+Installing rich for an improved exception logging
+
+Using uv pip install.
+
+Using Python 3.12.9 environment at /home/adminuser/venv
+
+Resolved 4 packages in 130ms
+
+Prepared [2025-03-07 12:07:03.730345] 4 packages[2025-03-07 12:07:03.730922]  [2025-03-07 12:07:03.731567] in 175ms[2025-03-07 12:07:03.731958] 
+
+Installed [2025-03-07 12:07:03.767969] 4 packages in 34ms
+
+ + markdown-it-py==3.0.0
+
+ + mdurl==0.1.2
+
+ + pygments==2.19.1[2025-03-07 12:07:03.769225] 
+
+ + rich==13.9.4
+
+
+────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+──────────────────────────────────────── pip ───────────────────────────────────────────
+
+
+Using standard pip install.
+
+Collecting python-dotenv==1.0.0 (from -r /mount/src/vid-based-chat/requirements.txt (line 1))
+
+  Downloading python_dotenv-1.0.0-py3-none-any.whl.metadata (21 kB)
+
+Collecting google-generativeai==0.3.1 (from -r /mount/src/vid-based-chat/requirements.txt (line 2))
+
+  Downloading google_generativeai-0.3.1-py3-none-any.whl.metadata (5.9 kB)
+
+Collecting streamlit==1.28.0 (from -r /mount/src/vid-based-chat/requirements.txt (line 3))
+
+  Downloading streamlit-1.28.0-py2.py3-none-any.whl.metadata (8.1 kB)
+
+Collecting moviepy==1.0.3 (from -r /mount/src/vid-based-chat/requirements.txt (line 4))
+
+  Downloading moviepy-1.0.3.tar.gz (388 kB)
+
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 388.3/388.3 kB 16.1 MB/s eta 0:00:00[2025-03-07 12:07:05.792598] 
+
+  Installing build dependencies: started
+
+  Installing build dependencies: finished with status 'done'
+
+  Getting requirements to build wheel: started
+
+  Getting requirements to build wheel: finished with status 'done'
+
+  Preparing metadata (pyproject.toml): started
+
+  Preparing metadata (pyproject.toml): finished with status 'done'
+
+Collecting opencv-python-headless==4.8.1.78 (from -r /mount/src/vid-based-chat/requirements.txt (line 5))
+
+  Downloading opencv_python_headless-4.8.1.78-cp37-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (19 kB)
+
+Collecting numpy==1.26.0 (from -r /mount/src/vid-based-chat/requirements.txt (line 6))
+
+  Downloading numpy-1.26.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (58 kB)
+
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 58.5/58.5 kB 158.2 MB/s eta 0:00:00[2025-03-07 12:07:10.092297] 
+
+Collecting pillow==10.1.0 (from -r /mount/src/vid-based-chat/requirements.txt (line 7))
+
+  Downloading Pillow-10.1.0-cp312-cp312-manylinux_2_28_x86_64.whl.metadata (9.5 kB)
+
+ERROR: Ignored the following versions that require a different python version: 0.55.2 Requires-Python <3.5; 1.21.2 Requires-Python >=3.7,<3.11; 1.21.3 Requires-Python >=3.7,<3.11; 1.21.4 Requires-Python >=3.7,<3.11; 1.21.5 Requires-Python >=3.7,<3.11; 1.21.6 Requires-Python >=3.7,<3.11
+
+ERROR: Could not find a version that satisfies the requirement pytubefix==8.12.3 (from versions: 1.0rc4, 1.0rc5, 1.0rc6, 1.0rc7, 1.0.0, 1.1rc1, 1.1.1, 1.1.2, 1.2.0, 1.3.0, 1.4.1, 1.5.0, 1.6.0, 1.7rc1, 1.7rc2, 1.7.0, 1.7.1, 1.8rc1, 1.8rc3, 1.8rc4, 1.8.0, 1.8.1rc1, 1.8.1, 1.8.2, 1.8.3rc1, 1.8.3rc2, 1.8.3, 1.9rc2, 1.9.0, 1.10rc1, 1.10.0, 1.11rc1, 1.11rc2, 1.11.0, 1.12rc1, 1.12.0, 1.13.1, 1.13.2, 1.13.3, 2.0rc2, 2.0.0, 2.1rc1, 2.1rc2, 2.1.1, 2.2rc1, 2.2rc2, 2.2.1, 2.3rc1, 2.3.0, 2.3.1, 2.3.2, 3.0rc1, 3.0.0, 3.1rc1, 3.1.0, 4.0rc1, 4.0rc2, 4.0rc3, 4.0rc4, 4.0.0, 5.0rc1, 5.0rc2, 5.0.0, 5.1rc1, 5.1.1, 5.1.2rc1, 5.1.2, 5.2rc1, 5.2.0, 5.3rc1, 5.3rc2, 5.3rc3, 5.3.0, 5.4rc1, 5.4rc2, 5.4.2, 5.5rc1, 5.5rc2, 5.5rc3, 5.5.0, 5.6rc1, 5.6rc2, 5.6.3, 5.7rc1, 5.7rc2, 5.7.0, 5.8rc1, 5.8.0, 6.0rc1, 6.0.0, 6.1rc1, 6.1.1, 6.1.2, 6.2rc1, 6.2rc2, 6.2rc3, 6.2.2, 6.3rc1, 6.3rc2, 6.3rc3, 6.3rc4, 6.3rc5, 6.3rc6, 6.3.3, 6.3.4rc1, 6.3.4, 6.4rc1, 6.4rc2, 6.4rc3, 6.4.2, 6.5a1, 6.5rc1, 6.5.1, 6.5.2rc1, 6.5.2, 6.5.3a1, 6.5.3a2, 6.5.3rc1, 6.5.3, 6.6rc1, 6.6.2, 6.6.3rc1, 6.6.3, 6.7a1, 6.7rc1, 6.7.0, 6.8.1, 6.9a1, 6.9rc1, 6.9.1, 6.9.2, 6.10a1, 6.10a2, 6.10a3, 6.10rc1, 6.10rc2, 6.10rc3, 6.10.2, 6.11rc1, 6.11.0, 6.12rc1, 6.12rc2, 6.12.0, 6.13rc1, 6.13.0, 6.13.1, 6.14rc1, 6.14.0, 6.15a1, 6.15rc1, 6.15.0, 6.15.1, 6.15.2, 6.15.4, 6.16rc1, 6.16rc2, 6.16.1, 6.16.2, 6.16.3, 6.17rc1, 6.17.0, 7.0rc1, 7.0.0, 7.1rc1, 7.1rc2, 7.1rc3, 7.1.3, 7.2rc1, 7.2rc2, 7.2.2, 7.3rc1, 7.3.0, 7.3.1, 7.4rc1, 7.4.0, 8.0rc1, 8.0rc2, 8.0rc3, 8.0rc4, 8.0rc5, 8.0.0, 8.1rc1, 8.1.1, 8.2rc1, 8.2rc2, 8.2rc3, 8.2.0, 8.3rc1, 8.3rc2, 8.3rc3, 8.3rc4, 8.3rc5, 8.3rc6, 8.3rc7, 8.3rc8, 8.3.0, 8.3.2, 8.4rc1, 8.4.0, 8.4.1, 8.5rc1, 8.5rc2, 8.5rc3, 8.5.1, 8.5.2, 8.5.3, 8.6.0, 8.7rc1, 8.7rc2, 8.7rc3, 8.7rc4, 8.7.0, 8.8rc1, 8.8.0, 8.8.1, 8.8.2, 8.8.3, 8.8.4, 8.8.5, 8.9rc1, 8.9rc2, 8.9.0, 8.10rc1, 8.10.0, 8.10.1, 8.10.2, 8.11rc1, 8.11.0, 8.12rc1, 8.12rc2, 8.12.0, 8.12.1, 8.12.2)
+
+ERROR: No matching distribution found for pytubefix==8.12.3
+
+
+[notice] A new release of pip is available: 24.0 -> 25.0.1
+
+[notice] To update, run: pip install --upgrade pip
+
+Checking if Streamlit is installed
+
+Installing rich for an improved exception logging
+
+Using standard pip install.
+
+Collecting rich>=10.14.0
+
+  Downloading rich-13.9.4-py3-none-any.whl.metadata (18 kB)
+
+Collecting markdown-it-py>=2.2.0 (from rich>=10.14.0)
+
+  Downloading markdown_it_py-3.0.0-py3-none-any.whl.metadata (6.9 kB)
+
+Collecting pygments<3.0.0,>=2.13.0 (from rich>=10.14.0)
+
+  Downloading pygments-2.19.1-py3-none-any.whl.metadata (2.5 kB)
+
+Collecting mdurl~=0.1 (from markdown-it-py>=2.2.0->rich>=10.14.0)
+
+  Downloading mdurl-0.1.2-py3-none-any.whl.metadata (1.6 kB)
+
+Downloading rich-13.9.4-py3-none-any.whl (242 kB)
+
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 242.4/242.4 kB 12.0 MB/s eta 0:00:00[2025-03-07 12:07:12.173219] 
+
+Downloading markdown_it_py-3.0.0-py3-none-any.whl (87 kB)
+
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 87.5/87.5 kB 130.7 MB/s eta 0:00:00
+
+Downloading pygments-2.19.1-py3-none-any.whl (1.2 MB)
+
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.2/1.2 MB 77.4 MB/s eta 0:00:00[2025-03-07 12:07:12.217825] 
+
+Downloading mdurl-0.1.2-py3-none-any.whl (10.0 kB)
+
+Installing collected packages: pygments, mdurl, markdown-it-py, rich
+
+  Attempting uninstall: pygments
+
+    Found existing installation: Pygments 2.19.1
+
+    Uninstalling Pygments-2.19.1:
+
+      Successfully uninstalled Pygments-2.19.1
+
+  Attempting uninstall: mdurl
+
+    Found existing installation: mdurl 0.1.2
+
+    Uninstalling mdurl-0.1.2:
+
+      Successfully uninstalled mdurl-0.1.2
+
+  Attempting uninstall: markdown-it-py
+
+    Found existing installation: markdown-it-py 3.0.0
+
+    Uninstalling markdown-it-py-3.0.0:
+
+      Successfully uninstalled markdown-it-py-3.0.0
+
+  Attempting uninstall: rich
+
+    Found existing installation: rich 13.9.4
+
+    Uninstalling rich-13.9.4:
+
+      Successfully uninstalled rich-13.9.4
+
+Successfully installed markdown-it-py-3.0.0 mdurl-0.1.2 pygments-2.19.1 rich-13.9.4
+
+
+[notice] A new release of pip is available: 24.0 -> 25.0.1
+
+[notice] To update, run: pip install --upgrade pip
+
+
+────────────────────────────────────────────────────────────────────────────────────────
+
+
+[12:07:14] ❗️ installer returned a non-zero exit code
+
+[12:07:14] ❗️ Error during processing dependencies! Please fix the error and push an update, or try restarting the app.
+
+---
+
+_**Assistant**_
 
 
 
