@@ -6,9 +6,6 @@ from pathlib import Path
 import streamlit as st
 from dotenv import load_dotenv
 import google.generativeai as genai
-from utils.video_processor import VideoProcessor
-from utils.chat_manager import ChatManager
-from utils.youtube_downloader import YouTubeDownloader
 
 # Configure logging
 logging.basicConfig(
@@ -16,6 +13,16 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
+
+# Try to import required modules with graceful error handling
+try:
+    from utils.video_processor import VideoProcessor
+    from utils.chat_manager import ChatManager
+    from utils.youtube_downloader import YouTubeDownloader
+    IMPORTS_SUCCESSFUL = True
+except ImportError as e:
+    logger.error(f"Error importing required modules: {str(e)}")
+    IMPORTS_SUCCESSFUL = False
 
 # Set default model name
 MODEL_NAME = "models/gemini-1.5-flash"
@@ -299,6 +306,11 @@ def main():
     st.subheader("Powered by Connective Labs")
     logger.info("Main application started")
     
+    # Check for missing dependencies
+    if not IMPORTS_SUCCESSFUL:
+        st.error("⚠️ Some required dependencies couldn't be loaded. The application may not function correctly.")
+        st.info("Please check the app logs for more details on which dependencies failed to load.")
+        
     # Initialize session state variables if they don't exist
     if "chat_history" not in st.session_state:
         st.session_state.chat_history = []

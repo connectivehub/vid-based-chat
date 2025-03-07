@@ -1,13 +1,28 @@
 import os
-import cv2
-import base64
+import logging
 import tempfile
 from typing import List, Dict, Any, Optional
 import numpy as np
-from moviepy.editor import VideoFileClip
-from PIL import Image
 import io
-import logging
+import base64
+from PIL import Image
+
+# Try to import OpenCV with fallbacks
+try:
+    import cv2
+except ImportError:
+    try:
+        import cv2.cv2 as cv2
+    except ImportError:
+        logging.error("OpenCV (cv2) could not be imported. Video processing will not work.")
+        cv2 = None
+
+# Try to import moviepy with fallback
+try:
+    from moviepy.editor import VideoFileClip
+except ImportError:
+    logging.error("MoviePy could not be imported. Audio extraction will not work.")
+    VideoFileClip = None
 
 # Configure logging
 logger = logging.getLogger(__name__)

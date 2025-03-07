@@ -1,6 +1,5 @@
-libgl1
-libglib2.0-0
+ffmpeg
 libsm6
-libxrender1
 libxext6
-ffmpeg 
+libxrender1
+libgl1-mesa-glx 
